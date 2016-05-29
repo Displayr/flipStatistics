@@ -1,0 +1,10 @@
+.Rproj.user/
+.Rhistory/
+.Rhistory
+.RData
+inst/doc
+.Rproj.user
+.Rhistory
+
+# testthat artifact
+tests/testthat/Rplots.pdf
