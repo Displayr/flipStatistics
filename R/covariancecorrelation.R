@@ -119,3 +119,22 @@ CovarianceAndCorrelationMatrix <- function(data,
     }
     return(input.matrix)
 }
+
+#' \code{Correlation}
+#'
+#' @description Computes the correlation between two vectors, using weights if provided.
+#' @param x A numeric vector.
+#' @param y A numeric vector.
+#' @param weights A numeric vector containing the value of the weight for each
+#'   row of \code{data}. If weights is NULL then this function is just a wrapper
+#'   for the base functions \code{cov} and \code{cor}.
+#' @examples
+#' x <- 1:10
+#' y <- c(2, 2:10)
+#' w <- rep(1, 10)
+#' Correlation(x, y, w)
+#' @export
+Correlation <- function(x, y, weights = NULL)
+{
+    CovarianceAndCorrelationMatrix(data.frame(x, y), weights, TRUE, TRUE)[2,1]
+}
