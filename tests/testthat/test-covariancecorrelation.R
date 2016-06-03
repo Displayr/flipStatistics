@@ -53,3 +53,15 @@ test_that("Correlation and covariance matrices are calculated correctly",
     # Unweighted Covariance Matrix with Pairwise Obs
     expect_equal(cov(test.data.1, use = "pairwise.complete.obs")[3,4], 0.314795729067899)
 })
+
+
+test_that("Correlation",
+{
+    x <- c(NA, 1:10)
+    y <- c(NA, 2, 2:10)
+    w <- c(NA, rep(1, 10))
+    expect_equal(Correlation(x, y, w), Correlation(x, y))
+    expect_equal(cor(x, y, use = "complete.obs"), Correlation(x, y))
+    w <- c(NA, 1:10)
+    expect_equal(Correlation(x, y, w), 0.998631, 0.0000001)
+})
