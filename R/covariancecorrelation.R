@@ -82,7 +82,6 @@ weightedPartialCovarianceMatrix <- function(data, weight, correlation = FALSE)
 #' my.data <- cbind(c(-0.9, 0.05, 0.1, 0.8), c(1, NaN, 0, -0.9))
 #' my.weight <- c(1.2, 0.8, 0.8, 1.2)
 #' CovarianceAndCorrelationMatrix(my.data, weights = my.weight, pairwise = TRUE)
-#' @importFrom flipData ExcludeCasesWithAnyMissingData
 #' @export
 CovarianceAndCorrelationMatrix <- function(data,
     weights = NULL,
@@ -115,7 +114,9 @@ CovarianceAndCorrelationMatrix <- function(data,
     {
         if (!pairwise)
         {
-            data <- ExcludeCasesWithAnyMissingData(data)
+            complete.obs <- !is.na(rowSums(data)) & weights > 0
+            data <- data[complete.obs, ]
+            weights <- weights[complete.obs]
         }
         # Handles all cases
         input.matrix <- weightedPartialCovarianceMatrix(data,
