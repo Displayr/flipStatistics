@@ -6,3 +6,4 @@
 #' WeightedCounts = function(x, weights){
 #'   tapply(weights, x, FUN = "sum", na.rm = TRUE)
 #' }
+
