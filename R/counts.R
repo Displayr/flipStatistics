@@ -1,9 +1,8 @@
-#' #' \code{WeightedCounts} Computes a SVD with frequency weights.
-#' #' @param x A numeric vector.
-#' #' @param weights Frequency Weights.
-#' #' @example
-#' #' @export
-#' WeightedCounts = function(x, weights){
-#'   tapply(weights, x, FUN = "sum", na.rm = TRUE)
-#' }
-
+#' \code{WeightedCounts} Computes a SVD with frequency weights.
+#' @param x A factor.
+#' @param weights Frequency Weights.
+#' @export
+WeightedCounts = function(x, weights)
+{
+   Table(weights ~ x, data.frame(x = x, weights = weights), FUN = sum)
+}

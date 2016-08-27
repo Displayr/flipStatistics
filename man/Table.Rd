@@ -4,7 +4,7 @@
 \alias{Table}
 \title{\code{Table}}
 \usage{
-Table(formula, data, FUN)
+Table(formula, data, FUN = sum)
 }
 \arguments{
 \item{formula}{A \code{formula} where the dependent variable is the variable to be aggregated over.}
@@ -12,6 +12,10 @@ Table(formula, data, FUN)
 \item{data}{A \code{data.frame}.}
 
 \item{FUN}{the function to be applied: see \code{apply} for details.}
+
+\item{x}{A \code{vector}.}
+
+\item{weights}{A \code{fector} of weights.}
 }
 \description{
 Creates a crosstab by aggregating numeric data over factors.
