@@ -12,10 +12,6 @@ Table(formula, data, FUN = sum)
 \item{data}{A \code{data.frame}.}
 
 \item{FUN}{the function to be applied: see \code{apply} for details.}
-
-\item{x}{A \code{vector}.}
-
-\item{weights}{A \code{fector} of weights.}
 }
 \description{
 Creates a crosstab by aggregating numeric data over factors.

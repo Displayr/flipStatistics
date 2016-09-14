@@ -71,3 +71,11 @@ test_that("Correlation",
     w <- c(NA, 1:10)
     expect_equal(Correlation(x, y, w), 0.998631, 0.0000001)
 })
+
+test_that("Correlation significance",
+{
+    expect_equal(CorrelationsWithSignificance(test.data.1, test.weight)$cor[3,4], 0.151448808216322)
+    expect_equal(CorrelationsWithSignificance(test.data.1, test.weight)$p[3,4], 0.1227358415903436)
+    expect_equal(CorrelationsWithSignificance(test.data.1, test.weight, spearman = TRUE)$cor[3,4], 0.1534977186961468)
+    expect_equal(CorrelationsWithSignificance(test.data.1, test.weight, spearman = TRUE)$p[3,4], 0.09251195118913291)
+})
