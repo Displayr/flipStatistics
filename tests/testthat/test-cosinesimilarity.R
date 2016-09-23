@@ -7,5 +7,7 @@ ind <- complete.cases(dat)
 dat <- dat[ind, ]
 wgt <- pcaPhoneTestData$weight[ind]
 
+test_that("Cosine similarity", {
 expect_equal(CosineSimilarities(dat, wgt)[1, 2],
              sum(dat[, 1] * dat[, 2] * wgt) / sqrt(sum(dat[, 1] ^ 2 * wgt) * sum(dat[, 2] ^ 2 * wgt)))
+})

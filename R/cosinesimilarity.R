@@ -3,8 +3,8 @@
 #' @description Computes the cosine similarity between columns of a matrix. The cosine similarity
 #' is the cosine of the angle between vectors (columns).
 #'
-#' @param x A matrix whose columns we use to calculate the cosine similarity.
-#' @param weight A vector of weights.
+#' @param x A \code{matrix} whose columns we use to calculate the cosine similarity.
+#' @param weight A \code{vector} of weights.
 #' @export
 CosineSimilarities <- function(x, weight = NULL)
 {
