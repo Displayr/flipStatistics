@@ -2,6 +2,7 @@
 
 export(Correlation)
 export(CorrelationsWithSignificance)
+export(CosineSimilarities)
 export(CovarianceAndCorrelationMatrix)
 export(Mean)
 export(SpearmanRanks)
