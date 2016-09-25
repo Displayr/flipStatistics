@@ -145,4 +145,75 @@ Correlation <- function(x, y, weights = NULL)
     CovarianceAndCorrelationMatrix(data.frame(x, y), weights, TRUE, TRUE)[2,1]
 }
 
+#' \code{CorrelationsWithSignificance}
+#'
+#' @description Computes correlations with significance from zero.
+#' @param data A numeric data frame
+#' @param weights A vector of weights
+#' @param spearman Whether to compute Spearman correlations instead of Pearson correlations.
+#' @importFrom survey svydesign svyvar SE
+#' @importFrom stats pt
+#' @export
+CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
+{
+    n <- ncol(data)
+    mtrx <- matrix(NA, n, n)
+    colnames(mtrx) <- names(data)
+    rownames(mtrx) <- names(data)
+    correlations <- mtrx
+    t.stats <- mtrx
+    p.values <- mtrx
+    not.na.weights <- !is.na(weights)
+    for (i in 1:n)
+    {
+        for (j in i:n)
+        {
+            if (i != j)
+            {
+                ind <- !is.na(data[, i]) & !is.na(data[, j]) & not.na.weights
+                wgt <- weights[ind]
+                pair <- if (spearman)
+                    data.frame(SpearmanRanks(data[ind, i], wgt), SpearmanRanks(data[ind, j], wgt))
+                else
+                    data[ind, c(i, j)]
 
+                dsgn <- svydesign(ids = ~1, weights = wgt, data = pair)
+                v <- svyvar(pair, dsgn)
+                correlations[i, j] <- v[1, 2] / sqrt(v[1, 1] * v[2, 2])
+                correlations[j, i] <- correlations[i, j]
+                t.stats[i, j] <- v[1, 2] / SE(v)[2]
+                t.stats[j, i] <- t.stats[i, j]
+                p.values[i, j] <- 2 * pt(-abs(t.stats[i, j]), sum(ind) - 2)
+                p.values[j, i] <- p.values[i, j]
+            }
+            else
+            {
+                correlations[i, i] <- 1
+                t.stats[i, i] <- Inf
+                p.values[i, i] <- 0
+            }
+        }
+    }
+    list(cor = correlations, t = t.stats, p = p.values)
+}
+
+#' \code{SpearmanRanks}
+#'
+#' @description Computes ranks for computing Spearman correlation.
+#' @param x A numeric vector.
+#' @param weights A vector of weights. Must not have missing values.
+#' @export
+SpearmanRanks <- function(x, weights)
+{
+    unique.vals <- sort(unique(x))
+    previous.rank <- 0
+    results <- rep(NA, length(x))
+    for (i in seq(unique.vals))
+    {
+        ind <- x == unique.vals[i]
+        population <- sum(weights[ind])
+        results[ind] <- previous.rank + (population + 1) / 2
+        previous.rank <- previous.rank + population
+    }
+    results
+}

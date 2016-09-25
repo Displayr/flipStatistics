@@ -2,11 +2,9 @@
 #' @description Creates a crosstab by aggregating numeric data over factors.
 #' @param formula A \code{formula} where the dependent variable is the variable to be aggregated over.
 #' @param data A \code{data.frame}.
-#' @param x A \code{vector}.
-#' @param weights A \code{fector} of weights.
 #' @param FUN the function to be applied: see \code{apply} for details.
 #'
-#' @importFrom stats terms
+#' @importFrom stats terms xtabs aggregate
 #' @export
 Table <- function(formula, data, FUN = sum)
 {

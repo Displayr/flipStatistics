@@ -10,5 +10,5 @@ License: GPL-3
 LazyData: TRUE
 Suggests:
     testthat, weights
-Imports: flipExampleData
+Imports: flipExampleData, survey
 RoxygenNote: 5.0.1
