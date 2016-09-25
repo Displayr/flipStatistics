@@ -18,3 +18,14 @@ Mean <- function(x, weights = NULL)
     xw <- sweep(x, 1, weights, "*")
     apply(xw, 2, sum, na.rm = TRUE) / sum.W
 }
+
+#' MeanByGroup
+#'
+#' @param x A \code{\link{data.frame}} or \code{\link{matrix}}.
+#' @param group A variable indicating group membership. Either a factor or coerced to a factor.
+#' @param weights The sampling or replication weights.
+#' @export
+MeanByGroup <- function(x, group, weights = NULL)
+{
+    StatisticsByGroup(x, group, weights, Mean)
+}
