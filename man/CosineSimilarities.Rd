@@ -7,9 +7,9 @@
 CosineSimilarities(x, weight = NULL)
 }
 \arguments{
-\item{x}{A matrix whose columns we use to calculate the cosine similarity.}
+\item{x}{A \code{matrix} whose columns we use to calculate the cosine similarity.}
 
-\item{weight}{A vector of weights.}
+\item{weight}{A \code{vector} of weights.}
 }
 \description{
 Computes the cosine similarity between columns of a matrix. The cosine similarity
