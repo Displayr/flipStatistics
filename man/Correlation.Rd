@@ -4,7 +4,7 @@
 \alias{Correlation}
 \title{\code{Correlation}}
 \usage{
-Correlation(x, y, weights = NULL)
+Correlation(x, y, weights = NULL, correlation = TRUE)
 }
 \arguments{
 \item{x}{A numeric vector.}
@@ -14,6 +14,8 @@ Correlation(x, y, weights = NULL)
 \item{weights}{A numeric vector containing the value of the weight for each
 row of \code{data}. If weights is NULL then this function is just a wrapper
 for the base functions \code{cov} and \code{cor}.}
+
+\item{correlation}{If \code{FALSE}, returns the covariance.}
 }
 \description{
 Computes the correlation between two vectors, using weights if provided.
