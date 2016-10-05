@@ -22,10 +22,4 @@ test_that("sum of squares by group",
           })
 
 
-library(flipMultivariates)
-data(colas, package = "flipExampleData")
-z <- colas$Q5_16_1 == "Yes"
-attr(z, "label") <- "A nice, long, subset description"
-zw <- as.numeric(unclass(colas$q8)) / 10
-zLDA <- suppressWarnings(LDA(d1 ~ Q5_5_1 + Q5_7_1 + Q5_13_1, subset = z, weights = zw, data = colas, prior = "Observed"))
-zLDA
+
