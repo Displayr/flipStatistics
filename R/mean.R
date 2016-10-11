@@ -5,7 +5,6 @@
 #' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
 #' @param weights The sampling or replication weights.
 #' @export
-
 Mean <- function(x, weights = NULL)
 {
     if (!is.matrix(x))

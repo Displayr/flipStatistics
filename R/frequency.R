@@ -7,7 +7,7 @@
 #' @export
 Frequency <- function(x, subset = NULL, weights = NULL)
 {
-    if (!is.null(subset) & !is.null(weights))
+    if (!is.null(subset) && !is.null(weights))
         subset <- subset & weights > 0
     if (is.null(weights))
     {

@@ -38,7 +38,7 @@ weightedPartialCovarianceMatrix <- function(data, weights, correlation = FALSE)
 #' my.data <- cbind(c(-0.9, 0.05, 0.1, 0.8), c(1, NaN, 0, -0.9))
 #' my.weight <- c(1.2, 0.8, 0.8, 1.2)
 #' CovarianceAndCorrelationMatrix(my.data, weights = my.weight, pairwise = TRUE)
-#' @importFrom stats cor
+#' @importFrom stats cor cov
 #' @export
 CovarianceAndCorrelationMatrix <- function(data,
     weights = NULL,
@@ -61,7 +61,7 @@ CovarianceAndCorrelationMatrix <- function(data,
         }
         # Handles all cases
         input.matrix <- weightedPartialCovarianceMatrix(data,
-            weight = weights,
+            weights = weights,
             correlation = use.correlation)
     }
     return(input.matrix)

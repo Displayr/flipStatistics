@@ -41,3 +41,46 @@ SumOfSquaresByGroup <- function(x, group, weights = NULL)
 {
     StatisticsByGroup(x, group, weights, SumOfSquares)
 }
+
+
+
+#' ResidualSumOfSquares
+#'
+#' Computes the rss for a factor.
+#'
+#' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
+#' @param group A variable indicating group membership. Either a factor or coerced to a factor.
+#' @param weights The sampling or replication weights.
+#' @export
+ResidualSumOfSquares <- function(x, group, weights = NULL)
+{
+    sum(SumOfSquaresByGroup(x, group, weights))
+}
+
+
+#' TotalSumOfSquares
+#'
+#' Computes the tss for one or more variables
+#'
+#' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
+#' @param weights The sampling or replication weights.
+#' @export
+TotalSumOfSquares <- function(x, weights = NULL)
+{
+    sum(SumOfSquares(x, weights))
+}
+
+
+
+#' OmegaSquared
+#'
+#' The generalized R-Squared (i.e., with multiple variables).
+#'
+#' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
+#' @param group A variable indicating group membership. Either a factor or coerced to a factor.
+#' @param weights The sampling or replication weights.
+#' @export
+OmegaSquared <- function(x, group, weights = NULL)
+{
+    1 - ResidualSumOfSquares(x, group, weights) / TotalSumOfSquares(x, weights)
+}
