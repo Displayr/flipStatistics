@@ -20,11 +20,4 @@ Table <- function(formula, data, FUN = sum)
 }
 
 
-aggregateAsVector <- function(x)
-{
-    #print(x)
-    result <- x[, 2]
-    names(result) <- x[, 1]
-    result
-}
 
