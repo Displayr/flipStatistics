@@ -3,10 +3,12 @@
 #' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
 #' @param group A variable indicating group membership. Either a factor or coerced to a factor.
 #' @param weights The sampling or replication weights.
-#' @param FUN A function.
+#' @param FUN A function that can handle a weight argument.
 #' @export
 StatisticsByGroup <- function(x, group, weights = NULL, FUN = Mean)
 {
+    if (!is.matrix(x) & !is.data.frame(x))
+        x <- as.matrix(x)
     if (!is.factor(group))
         group <- factor(group)
     n.levels <- nlevels(group)

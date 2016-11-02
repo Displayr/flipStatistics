@@ -13,7 +13,7 @@ StatisticsByGroup(x, group, weights = NULL, FUN = Mean)
 
 \item{weights}{The sampling or replication weights.}
 
-\item{FUN}{A function.}
+\item{FUN}{A function that can handle a weight argument.}
 }
 \description{
 StatisticsByGroup
