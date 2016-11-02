@@ -9,6 +9,11 @@ Description: Computes standard statistics, dealing with situations not addressed
 License: GPL-3
 LazyData: TRUE
 Suggests:
-    testthat, weights
-Imports: flipExampleData, survey
+    testthat,
+    weights
+Imports:
+    flipExampleData,
+    flipFormat,
+    flipTransformations,
+    survey
 RoxygenNote: 5.0.1
