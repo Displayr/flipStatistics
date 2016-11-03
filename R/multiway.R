@@ -52,8 +52,8 @@ Multiway <- function(rows,
         result$Count <- 0
         if (!is.null(weights))
             names(result)[ncol(result)] <- "Weighted count"
-        i <- as.integer(names(counts))
-        result$Count[i] <- counts
+        non.empty.rows <- as.integer(names(counts))
+        result$Count[non.empty.rows] <- counts
         if (!is.null(numeric))
         {
             mean <- MeanByGroup(numeric, values, weights)
@@ -62,7 +62,7 @@ Multiway <- function(rows,
             sum <- mean * as.matrix(counts)
             m <- matrix(NA, nrow(result), ncol = 4)
             colnames(m) <- paste0(label, "\n", c("Mean", "Minimum", "Maximum", "Sum"))
-            m[i, ] <- cbind(mean, min, max, sum)
+            m[non.empty.rows, ] <- cbind(mean, min, max, sum)
             result <- cbind(result, m)
         }
     }
@@ -87,24 +87,22 @@ Multiway <- function(rows,
             nms <- names(counts)
         mtch <- match(nms, 1:n.p)
         colnames(m) <- column.labels
-        # print(names(counts))
-        # print(mtch)
         m[mtch] <- counts
-        if (hide.empty.columns)
-            m <- m[, apply(!is.na(m), 2, sum) > 0]
-        if (hide.empty.rows)
-            i <- which(apply(!is.na(m), 1, sum) > 0)
+        if (hide.empty.columns | hide.empty.rows)
+        {
+            has.data <- if (has.numeric) !is.na(m) else m > 0
+            if (hide.empty.columns)
+            {
+                empty.columns <- apply(has.data, 2, sum) == 0
+                m <- m[, empty.columns]
+            }
+            if (hide.empty.rows)
+                non.empty.rows <- apply(has.data, 1, sum) > 0
+        }
         result <- cbind(result, m)
-
-        # print(mean)
-        # #means <- StatisticByGroup(numeric, values, weights, FUN = mean, na.rm = TRUE)
-        # result$Mean <- NA
-        # result$Mean[i] <- mean
-        # names(result)[ncol(result)] <- paste0(label, "\nAverage")
-
     }
     if (hide.empty.rows)
-        result <- result[i, ]
+        result <- result[non.empty.rows, ]
     result
 }
 
