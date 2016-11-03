@@ -94,7 +94,7 @@ Multiway <- function(rows,
             if (hide.empty.columns)
             {
                 empty.columns <- apply(has.data, 2, sum) == 0
-                m <- m[, empty.columns]
+                m <- m[, !empty.columns]
             }
             if (hide.empty.rows)
                 non.empty.rows <- apply(has.data, 1, sum) > 0
