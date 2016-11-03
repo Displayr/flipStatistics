@@ -72,10 +72,10 @@ Multiway <- function(rows,
         n.columns <- nrow(columns$labels)
         n.p <- n.rows * n.columns
         m <- matrix(if(has.numeric) NA else 0, n.rows, n.columns)
-        column.labels <- apply(columns$labels, 1, paste, collapse = "/n")
+        column.labels <- apply(columns$labels, 1, paste, collapse = "\n")
         if (has.numeric)
         {
-            column.labels <- paste0(column.labels, "/n", numeric.statistic, ": ", label)
+            column.labels <- paste0(column.labels, "\n", numeric.statistic, ": ", label)
             counts <- StatisticsByGroup(numeric, values, weights, FUN = switch(numeric.statistic,
                                                                                "Minimum" = Min,
                                                                                "Maximum" = Max,
