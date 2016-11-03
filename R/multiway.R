@@ -110,6 +110,7 @@ Multiway <- function(rows,
 #'
 #' @param data A \code{\link{data.frame}} of variables.
 #' @importFrom flipFormat Labels
+#' @importFrom flipTransformations Factor
 #' @param subset The sub-group to include in the analsis.
 #' @export
 Interaction <- function(data, subset)
@@ -118,7 +119,7 @@ Interaction <- function(data, subset)
     n <- length(data[[1]])
     for (i in 1:n.variables)
         if (!is.factor(data[[i]]))
-             data[[i]] <- factor(data[[i]])
+             data[[i]] <- Factor(data[[i]])
     # Computing values
     labels <- matrix("", prod(sapply(data, nlevels)), n.variables)
     prod.n.levels <- 1
