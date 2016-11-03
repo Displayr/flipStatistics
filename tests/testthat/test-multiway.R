@@ -53,10 +53,21 @@ test_that("Table of means",
               f <- suppressWarnings(Multiway(data.frame(d1, q8), numeric = d2,  data.frame(d4, q7), hide.empty.rows = TRUE, numeric.statistic = "Sum", weights = wgt, subset = sb))
               expect_equal(sum(f[,-1:-2], na.rm = TRUE), sum((as.integer(sb) * wgt*unclass(d2))[complete.cases(cbind(d1, q8, d4, q7, d2))]))
 
+f <- suppressWarnings(Multiway(data.frame(d1), numeric = d2,  data.frame(d4, q7, q8), hide.empty.rows = TRUE, numeric.statistic = "Sum"))
+
           })
-
-detach(colas)
-
+#
+# id <- 1:327
+# Multiway(data.frame(d1), numeric = d2,  columns = data.frame(d3, id), hide.empty.columns = FALSE, numeric.statistic = "Sum")
+# detach(colas)
+#
+#
+#
+# Multiway(data.frame(d1), numeric = d2,  columns = data.frame(d4, q7, q8), hide.empty.columns = FALSE, numeric.statistic = "Sum")
+#
+#
+# Multiway(data.frame(d1), numeric = d2,  columns = data.frame(d4, q7, q8), hide.empty.columns = FALSE, numeric.statistic = "Sum")
+#
 
 
 # Interaction(data.frame(d1, d2, d3))
