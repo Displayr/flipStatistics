@@ -6,7 +6,9 @@ data(colas, package = "flipExampleData")
 attach(colas)
 test_that("Frequency",
           {
-              f <- Multiway(data.frame(d1, d2, d3), hide.empty.rows = TRUE)
+              d0 <- factor(rep("Cat", 327))
+              levels(d0) <- c("Cat", "Dog")
+              f <- Multiway(data.frame(d1, d0,  d2, d3), hide.empty.rows = TRUE)
               expect_equal(sum(f$Count), sum(xtabs(~d1 + d2 + d3)))
               f <- Multiway(list(d1, d2, d3), hide.empty.rows = TRUE)
               expect_equal(sum(f$Count), sum(xtabs(~d1 + d2 + d3)))
@@ -26,7 +28,6 @@ test_that("Means",
               expect_equal(sum(f1$Count), cnt)
               expect_equal(sum(f1[, 5], na.rm = TRUE), av)
           })
-
 
 test_that("Crosstab",
           {
