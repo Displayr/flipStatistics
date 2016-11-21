@@ -44,7 +44,8 @@ Multiway <- function(rows,
     if (has.numeric <- !is.null(numeric))
     {
         label <- Labels(numeric)
-        numeric <- AsNumeric(numeric, binary = FALSE)
+        if(!is.numeric(numeric))
+            numeric <- AsNumeric(numeric, binary = FALSE)
     }
     # 1D
     if (!has.columns)

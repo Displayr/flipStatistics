@@ -27,7 +27,7 @@ test_that("Means",
               f1 <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,  hide.empty.rows = FALSE))
               expect_equal(sum(f1$Count), cnt)
               expect_equal(sum(f1[, 5], na.rm = TRUE), av)
-          })
+})
 
 test_that("Crosstab",
           {
@@ -55,9 +55,28 @@ test_that("Table of means",
               expect_equal(sum(f[,-1:-2], na.rm = TRUE), sum((as.integer(sb) * wgt*unclass(d2))[complete.cases(cbind(d1, q8, d4, q7, d2))]))
 
 f <- suppressWarnings(Multiway(data.frame(d1), numeric = d2,  data.frame(d4, q7, q8), hide.empty.rows = TRUE, numeric.statistic = "Sum"))
-
           })
+
+
+detach(colas)
+test_that("Data types for the numeric variable should be passed when reading in a numeric variable",
+          {
+              data(phone, package = "flipExampleData")
+              attach(phone)
+            Multiway(list(q2, q3), list(q4), q25)
+              detach(phone)
+    # if (length(formNumeric) == 1) NULL else formNumeric,
+    # numeric.statistic = formStatistic,
+    # hide.empty.rows = formHideRows,
+    # hide.empty.columns = formHideColumns,
+    # subset = QFilter,
+    # weights = QPopulationWeight)
+})
+
+
+
 #
+
 # id <- 1:327
 # Multiway(data.frame(d1), numeric = d2,  columns = data.frame(d3, id), hide.empty.columns = FALSE, numeric.statistic = "Sum")
 # detach(colas)
