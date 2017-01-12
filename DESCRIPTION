@@ -16,4 +16,9 @@ Imports:
     flipFormat,
     flipTransformations,
     survey
+Remotes:
+    NumbersInternational/flipU,
+    NumbersInternational/flipTransformations,
+    NumbersInternational/flipFormat,
+    NumbersInternational/flipExampleData
 RoxygenNote: 5.0.1
