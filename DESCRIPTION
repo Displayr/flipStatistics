@@ -15,8 +15,6 @@ Imports:
     flipExampleData,
     flipFormat,
     flipTransformations,
-    survival,
-    Hmisc,
     survey
 Remotes:
     NumbersInternational/flipU,
