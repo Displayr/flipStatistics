@@ -15,6 +15,7 @@ Imports:
     flipExampleData,
     flipFormat,
     flipTransformations,
+    Hmisc,
     survey
 Remotes:
     NumbersInternational/flipU,
