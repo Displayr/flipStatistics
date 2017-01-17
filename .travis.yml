@@ -9,4 +9,4 @@ before_install:
   Rscript -e 'update.packages(ask = FALSE)'
 
 after_script:
-  - "curl --request POST --form token=d8d69ec8f7941263cf1f9d1105292e698b803fce --form ref=master https://api.travis-ci.org/repo/chschan%2FtestCI/requests"
+  - "curl --request POST --form token=$GITHUB_PAT --form ref=master https://api.travis-ci.org/repo/chschan%2FtestCI/requests"
