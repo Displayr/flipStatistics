@@ -8,6 +8,6 @@ warnings_are_errors: false
 before_install:
   Rscript -e 'update.packages(ask = FALSE)'
 
-after_script: >
-  - curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token $GITHUB_PAT" -d '{"request":{"message":"Build triggered by flipStatistics", "branch":"master"}}' https://api.travis-ci.org/repo/chschan%2FtestCI/requests
+after_script: >-
+  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token $GITHUB_PAT" -d '{"request":{"message":"Build triggered by flipStatistics", "branch":"master"}}' "https://api.travis-ci.org/repo/chschan%2FtestCI/requests"
 
