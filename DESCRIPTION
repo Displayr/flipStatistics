@@ -10,15 +10,14 @@ License: GPL-3
 LazyData: TRUE
 Suggests:
     testthat,
-    weights
+    weights,
+    flipExampleData
 Imports:
-    flipExampleData,
     flipFormat,
     flipTransformations,
     survey
 Remotes:
     NumbersInternational/flipU,
     NumbersInternational/flipTransformations,
-    NumbersInternational/flipFormat,
-    NumbersInternational/flipExampleData
+    NumbersInternational/flipFormat
 RoxygenNote: 5.0.1
