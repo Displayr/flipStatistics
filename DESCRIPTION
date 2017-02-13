@@ -17,7 +17,7 @@ Imports:
     flipTransformations,
     survey
 Remotes:
-    NumbersInternational/flipU,
-    NumbersInternational/flipTransformations,
-    NumbersInternational/flipFormat
+    Displayr/flipU,
+    Displayr/flipTransformations,
+    Displayr/flipFormat
 RoxygenNote: 5.0.1
