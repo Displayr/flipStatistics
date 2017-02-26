@@ -4,6 +4,7 @@ sudo: required
 cache: packages
 before_cache:
   - rm -rf $HOME/R/Library/flip*
+  - rm -rf $HOME/R/Library/rhtml*
 warnings_are_errors: false
 
 # install debian libraries to match R-servers

@@ -2,10 +2,10 @@ Package: flipStatistics
 Type: Package
 Title:Computes standard statistics (e.g., mean, standard deviation.)
 Version: 0.1.0
-Maintainer: Tim Bock <tim.bock@numbers.net.au>
-Author: Numbers International Pty Ltd
+Author: Displayr
+Maintainer: Displayr <opensource@displayr.com>
 Description: Computes standard statistics, dealing with situations not addressed
-    in base r. E.g., weighting, non-standard data structures.
+    in base R. E.g., weighting, non-standard data structures.
 License: GPL-3
 LazyData: TRUE
 Suggests:

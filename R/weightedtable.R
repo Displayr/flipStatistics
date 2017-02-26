@@ -1,3 +1,6 @@
+# This code is modified the table function in the R base package
+# The base package is part of R which is licensed under GPL-3
+
 #' \code{WeightedTable}
 #' @description Generalisation of the \code{table} function in base to handle weights
 #' @param ... one or more objects which can be interpretated as factors, or a list or dataframe whose components can be so interpreted
