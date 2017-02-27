@@ -2,7 +2,7 @@ Package: flipStatistics
 Type: Package
 Title:Computes standard statistics (e.g., mean, standard deviation.)
 Version: 0.1.0
-Author: Displayr
+Author: Displayr <opensource@displayr.com>
 Maintainer: Displayr <opensource@displayr.com>
 Description: Computes standard statistics, dealing with situations not addressed
     in base R. E.g., weighting, non-standard data structures.
