@@ -18,4 +18,3 @@ StatisticsByGroup(x, group, weights = NULL, FUN = Mean)
 \description{
 StatisticsByGroup
 }
-

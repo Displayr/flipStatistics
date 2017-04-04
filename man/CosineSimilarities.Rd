@@ -15,4 +15,3 @@ CosineSimilarities(x, weight = NULL)
 Computes the cosine similarity between columns of a matrix. The cosine similarity
 is the cosine of the angle between vectors (columns).
 }
-

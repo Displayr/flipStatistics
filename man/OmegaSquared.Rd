@@ -16,4 +16,3 @@ OmegaSquared(x, group, weights = NULL)
 \description{
 The generalized R-Squared (i.e., with multiple variables).
 }
-

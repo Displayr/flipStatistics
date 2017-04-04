@@ -14,4 +14,3 @@ Sum(x, weights = NULL)
 \description{
 Computes the weighted sum  of one or more variables. Missing values are automatically excluded.
 }
-

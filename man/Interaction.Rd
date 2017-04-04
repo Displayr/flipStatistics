@@ -14,4 +14,3 @@ Interaction(data, subset)
 \description{
 Interaction
 }
-

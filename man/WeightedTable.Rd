@@ -24,4 +24,3 @@ WeightedTable(..., weights = NULL, exclude = if (useNA == "no") c(NA, NaN),
 \description{
 Generalisation of the \code{table} function in base to handle weights
 }
-

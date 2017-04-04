@@ -17,4 +17,3 @@ Computes the weighted minimum of one or more variables. Missing values are autom
 \details{
 Computes the mininum of the observations with positive weights.
 }
-

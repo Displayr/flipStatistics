@@ -14,4 +14,3 @@ WeightedCounts(x, weights)
 \description{
 \code{WeightedCounts} Computes a SVD with frequency weights.
 }
-

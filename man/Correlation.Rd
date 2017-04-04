@@ -26,4 +26,3 @@ y <- c(2, 2:10)
 w <- rep(1, 10)
 Correlation(x, y, w)
 }
-

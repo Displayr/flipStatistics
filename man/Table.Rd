@@ -16,4 +16,3 @@ Table(formula, data, FUN = sum)
 \description{
 Creates a crosstab by aggregating numeric data over factors.
 }
-

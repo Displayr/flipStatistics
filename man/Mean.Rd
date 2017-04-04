@@ -14,4 +14,3 @@ Mean(x, weights = NULL)
 \description{
 Computes the weighted mean of one or more variables. Missing values are automatically excluded.
 }
-

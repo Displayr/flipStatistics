@@ -29,4 +29,3 @@ no columns have been specified.}
 \description{
 Creates a crosstab by aggregating numeric data over factors.
 }
-

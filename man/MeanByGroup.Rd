@@ -16,4 +16,3 @@ MeanByGroup(x, group, weights = NULL)
 \description{
 MeanByGroup
 }
-

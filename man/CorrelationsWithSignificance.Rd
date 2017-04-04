@@ -16,4 +16,3 @@ CorrelationsWithSignificance(data, weights, spearman = FALSE)
 \description{
 Computes correlations with significance from zero.
 }
-

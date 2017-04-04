@@ -14,4 +14,3 @@ SpearmanRanks(x, weights)
 \description{
 Computes ranks for computing Spearman correlation.
 }
-

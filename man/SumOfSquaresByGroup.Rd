@@ -16,4 +16,3 @@ SumOfSquaresByGroup(x, group, weights = NULL)
 \description{
 Computes the weighted sum of squares of one or more variables
 }
-

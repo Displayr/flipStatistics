@@ -14,4 +14,3 @@ TotalSumOfSquares(x, weights = NULL)
 \description{
 Computes the tss for one or more variables
 }
-

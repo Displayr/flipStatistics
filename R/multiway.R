@@ -9,7 +9,7 @@
 #' @param hide.empty.columns Hide columns containing no data.
 #' @param subset The sub-group to include in the analsis.
 #' @param weights The sampling or replication weights.
-#' @importFrom flipTransformations AsNumeric
+#' @importFrom flipTransformations AsNumeric ProcessQVariables
 #' @export
 Multiway <- function(rows,
                      columns = NULL,
@@ -22,6 +22,11 @@ Multiway <- function(rows,
 {
     if (!is.data.frame(rows))
         rows <- data.frame(rows)
+
+    rows <- ProcessQVariables(rows)
+    columns <- ProcessQVariables(columns)
+    numeric <- ProcessQVariables(numeric)
+
     n <- length(rows[[1]])
     # Cleaning subset.
     if (is.null(subset) || !is.null(subset) && length(subset) == 1)

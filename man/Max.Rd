@@ -17,4 +17,3 @@ Computes the weighted maximum of one or more variables. Missing values are autom
 \details{
 Computes the maximum of the observations with positive weights.
 }
-

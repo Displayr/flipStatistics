@@ -16,4 +16,3 @@ Frequency(x, subset = NULL, weights = NULL)
 \description{
 Computes a frequency table, taking weights into account if applicable.
 }
-

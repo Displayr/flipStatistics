@@ -16,4 +16,3 @@ Variance(x, weights = NULL, method = "SPSS")
 \description{
 Computes the weighted variance of one or more variables
 }
-

@@ -16,4 +16,3 @@ ResidualSumOfSquares(x, group, weights = NULL)
 \description{
 Computes the rss for a factor.
 }
-
