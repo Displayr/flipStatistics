@@ -10,14 +10,18 @@ License: GPL-3
 LazyData: TRUE
 Suggests:
     testthat,
-    weights,
-    flipExampleData
+    flipExampleData,
+    weights
 Imports:
+    flipData,
     flipFormat,
     flipTransformations,
+    rhtmlHeatmap,
     survey
 Remotes:
     Displayr/flipU,
+    Displayr/flipData,
     Displayr/flipTransformations,
-    Displayr/flipFormat
+    Displayr/flipFormat,
+    Displayr/rhtmlHeatmap
 RoxygenNote: 6.0.1

@@ -190,3 +190,127 @@ SpearmanRanks <- function(x, weights)
     }
     results
 }
+
+
+#' \code{CorrealtionMatrix}
+#'
+#' @description Produces a correlation TODO
+#' @param input.type TODO
+#' @param input.data TODO
+#' @param use.names TODO
+#' @param ignore.columns TODO
+#' @param missing.data TODO
+#' @param spearman TODO
+#' @param filter TODO
+#' @param weights An optional vector of sampling weights.
+#' @export
+CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = FALSE, ignore.columns = "",
+                              missing.data = "Use partial data", spearman = FALSE,
+                              filter = NULL, weights = NULL)
+{
+    UseMethod("CorrelationMatrix")
+}
+
+# Default method for CorrelationMatrix.
+#' @importFrom flipFormat ExtractCommonPrefix Labels
+#' @importFrom flipTransformations QuestionListToDataFrame AsNumeric ProcessQVariables
+#' @importFrom flipData ErrorIfMissingDataFound GetTidyTwoDimensionalArray RemoveCasesWithAllNA RemoveCasesWithAnyNA
+#' @export
+CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE, ignore.columns = "",
+                                      missing.data = "Use partial data", spearman = FALSE,
+                                      filter = NULL, weights = NULL)
+{
+    dat <- if (input.type == "Variables") {
+        var.dat <- AsNumeric(ProcessQVariables(input.data), binary = FALSE)
+        # Changing names to labels.
+        if (!use.names)
+            names(var.dat) <- ExtractCommonPrefix(Labels(var.dat))$shortened.labels
+        var.dat
+
+    } else if (input.type == "Questions") {
+        names.to.remove <- trimws(unlist(strsplit(ignore.columns, split = ",")))
+        AsNumeric(QuestionListToDataFrame(input.data, names.to.remove = names.to.remove), binary = FALSE)
+
+    } else if (input.type == "Table") {
+        mat <- GetTidyTwoDimensionalArray(input.data, ignore.columns, ignore.columns)
+        df <- AsNumeric(data.frame(mat, check.names = FALSE))
+        if (!is.null(weights))
+            warning("Weights applied to this item have been ignored as they are not applicable when the input is a table.")
+        if (any(filter != 1))
+            warning("Filter(s) applied to this item have been ignored as they are not applicable when the input is a table.")
+        df
+    } else
+        stop(paste("Input type not handled:", input.type))
+
+    wgt <- if (is.null(weights) || input.type == "Table") {
+        rep(1, nrow(dat))
+    } else
+        weights
+
+    if (input.type != "Table") {
+        dat <- dat[filter, ]
+        wgt <- wgt[filter]
+    }
+
+    processed.data <- if (missing.data == "Error if missing data") {
+        ErrorIfMissingDataFound(dat)
+    } else if (missing.data == "Exclude cases with missing data") {
+        RemoveCasesWithAnyNA(dat)
+    } else if (missing.data == "Use partial data") {
+        RemoveCasesWithAllNA(dat)
+    } else
+        stop(c("Option not handled:", missing.data))
+
+    wgt <- wgt[row.names(dat) %in% rownames(processed.data)]
+
+    result <- CorrelationsWithSignificance(processed.data, wgt, spearman)
+
+    class(result) <- "CorrelationMatrix"
+    return(result)
+}
+
+#' \code{print.CorrelationMatrix}
+#'
+#' @param x An object of class \code{\link{CorrelationMatrix}}.
+#' @param show.cell.values TODO
+#' @param row.labels TODO
+#' @param column.labels TODO
+#' @param ... TODO
+#' @details Displays a correlation matrix as a heatmap.
+#' @importFrom flipFormat FormatWithDecimals
+#' @export
+print.CorrelationMatrix <- function(x, ..., show.cell.values = "Automatic", row.labels = "Yes", column.labels = "Yes") {
+
+    n <- ncol(x$cor)
+    cellnote <- matrix("", n, n)
+    t.stat <- matrix("", n, n)
+    p.val <- matrix("", n, n)
+    for (i in 1:n)
+        for (j in 1:n)
+        {
+            cellnote[i, j] <- FormatWithDecimals(x$cor[i, j], 2)
+            t.stat[i, j] <- FormatWithDecimals(x$t[i, j], 3)
+            p.val[i, j] <- FormatWithDecimals(x$p[i, j], 3)
+        }
+
+    show.cellnote.in.cell <- (n <= 10 && show.cell.values != "No") || show.cell.values == "Yes"
+    show.x.axes.labels <- column.labels == "Yes"
+    show.y.axes.labels <- row.labels == "Yes"
+
+    tooltip.info <- list("t-statistic" = t.stat,
+                         "p-value" = p.val)
+
+    correlation.matrix <- rhtmlHeatmap::Heatmap(x$cor, Rowv = NULL, Colv = NULL,
+                                                cellnote = cellnote, colors = "RdBu",
+                                                show_cellnote_in_cell = show.cellnote.in.cell,
+                                                xaxis_location = "bottom", yaxis_location = "left",
+                                                lower_triangle = TRUE, cexRow = 0.79,
+                                                xaxis_hidden = !show.x.axes.labels,
+                                                yaxis_hidden = !show.y.axes.labels,
+                                                color_range = c(-1, 1),
+                                                extra_tooltip_info = tooltip.info)
+
+    print(correlation.matrix)
+}
+
+
