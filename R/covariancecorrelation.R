@@ -202,11 +202,12 @@ SpearmanRanks <- function(x, weights)
 #' @param missing.data TODO
 #' @param spearman TODO
 #' @param filter TODO
+#' @param ... Other arguments to be passed to print.CorrelationMatrix.
 #' @param weights An optional vector of sampling weights.
 #' @export
 CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = FALSE, ignore.columns = "",
                               missing.data = "Use partial data", spearman = FALSE,
-                              filter = NULL, weights = NULL)
+                              filter = NULL, weights = NULL, ...)
 {
     UseMethod("CorrelationMatrix")
 }
@@ -218,7 +219,7 @@ CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = 
 #' @export
 CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
-                                      filter = NULL, weights = NULL)
+                                      filter = NULL, weights = NULL, ...)
 {
     dat <- if (input.type == "Variables") {
         var.dat <- AsNumeric(ProcessQVariables(input.data), binary = FALSE)

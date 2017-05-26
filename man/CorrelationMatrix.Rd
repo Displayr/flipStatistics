@@ -6,7 +6,7 @@
 \usage{
 CorrelationMatrix(input.type = "Variables", input.data, use.names = FALSE,
   ignore.columns = "", missing.data = "Use partial data",
-  spearman = FALSE, filter = NULL, weights = NULL)
+  spearman = FALSE, filter = NULL, weights = NULL, ...)
 }
 \arguments{
 \item{input.type}{TODO}
@@ -24,6 +24,8 @@ CorrelationMatrix(input.type = "Variables", input.data, use.names = FALSE,
 \item{filter}{TODO}
 
 \item{weights}{An optional vector of sampling weights.}
+
+\item{...}{Other arguments to be passed to print.CorrelationMatrix.}
 }
 \description{
 Produces a correlation TODO
