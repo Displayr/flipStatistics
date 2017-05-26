@@ -10,13 +10,14 @@
 \arguments{
 \item{x}{An object of class \code{\link{CorrelationMatrix}}.}
 
-\item{...}{TODO}
+\item{...}{Other paramaters, not used.}
 
-\item{show.cell.values}{TODO}
+\item{show.cell.values}{Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
+values if there are <= 10 rows in the matrix.}
 
-\item{row.labels}{TODO}
+\item{row.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
 
-\item{column.labels}{TODO}
+\item{column.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
 }
 \description{
 \code{print.CorrelationMatrix}

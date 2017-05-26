@@ -194,20 +194,22 @@ SpearmanRanks <- function(x, weights)
 
 #' \code{CorrealtionMatrix}
 #'
-#' @description Produces a correlation TODO
-#' @param input.type TODO
-#' @param input.data TODO
-#' @param use.names TODO
-#' @param ignore.columns TODO
-#' @param missing.data TODO
-#' @param spearman TODO
-#' @param filter TODO
-#' @param ... Other arguments to be passed to print.CorrelationMatrix.
+#' @description Produces a correlation matrix.
+#' @param input.type One of \code{"Variables"}, \code{"Questions"} or \code{"Table"}.
+#' @param input.data Either a list of vectors for \code{"Variables"}, a list of data.frames for \code{"Questions"},
+#' or a matrix for \code{"Table"} where the correlation is calculated between the columns.
+#' @param use.names Boolean indicating whether to use names in place of labels.
+#' @param ignore.columns For \code{"Questions"}, these are a list of question categories to ignore. For \code{"Table"},
+#' these are a list of columns and rows in the source table to ignore. Typically \code{c("NET", "Total", "SUM")}.
+#' @param missing.data Treatment of missing data. Options are \code{"Use partial data"}, \code{"Error if missing data"},
+#' or \code{"Exclude cases with missing data"}.
+#' @param spearman Boolean whether to compute Spearman's correlation instead of Pearson's correlation.
+#' @param filter An optional vector specifying a subset of values to be used.
 #' @param weights An optional vector of sampling weights.
 #' @export
 CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = FALSE, ignore.columns = "",
                               missing.data = "Use partial data", spearman = FALSE,
-                              filter = NULL, weights = NULL, ...)
+                              filter = NULL, weights = NULL)
 {
     UseMethod("CorrelationMatrix")
 }
@@ -219,7 +221,7 @@ CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = 
 #' @export
 CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
-                                      filter = NULL, weights = NULL, ...)
+                                      filter = NULL, weights = NULL)
 {
     dat <- if (input.type == "Variables") {
         var.dat <- AsNumeric(ProcessQVariables(input.data), binary = FALSE)
@@ -273,10 +275,11 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
 #' \code{print.CorrelationMatrix}
 #'
 #' @param x An object of class \code{\link{CorrelationMatrix}}.
-#' @param show.cell.values TODO
-#' @param row.labels TODO
-#' @param column.labels TODO
-#' @param ... TODO
+#' @param show.cell.values Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
+#' values if there are <= 10 rows in the matrix.
+#' @param row.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
+#' @param column.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
+#' @param ... Other paramaters, not used.
 #' @details Displays a correlation matrix as a heatmap.
 #' @importFrom flipFormat FormatWithDecimals
 #' @export
