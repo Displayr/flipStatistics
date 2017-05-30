@@ -4,20 +4,12 @@
 \alias{print.CorrelationMatrix}
 \title{\code{print.CorrelationMatrix}}
 \usage{
-\method{print}{CorrelationMatrix}(x, ..., show.cell.values = "Automatic",
-  row.labels = "Yes", column.labels = "Yes")
+\method{print}{CorrelationMatrix}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{\link{CorrelationMatrix}}.}
 
 \item{...}{Other paramaters, not used.}
-
-\item{show.cell.values}{Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
-values if there are <= 10 rows in the matrix.}
-
-\item{row.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
-
-\item{column.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
 }
 \description{
 \code{print.CorrelationMatrix}

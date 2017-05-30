@@ -206,10 +206,15 @@ SpearmanRanks <- function(x, weights)
 #' @param spearman Boolean whether to compute Spearman's correlation instead of Pearson's correlation.
 #' @param filter An optional vector specifying a subset of values to be used.
 #' @param weights An optional vector of sampling weights.
+#' @param show.cell.values Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
+#' values if there are <= 10 rows in the matrix.
+#' @param row.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
+#' @param column.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
 #' @export
 CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = FALSE, ignore.columns = "",
                               missing.data = "Use partial data", spearman = FALSE,
-                              filter = NULL, weights = NULL)
+                              filter = NULL, weights = NULL, show.cell.values = "Automatic",
+                              row.labels = "Yes", column.labels = "Yes")
 {
     UseMethod("CorrelationMatrix")
 }
@@ -221,7 +226,8 @@ CorrelationMatrix <- function(input.type = "Variables", input.data, use.names = 
 #' @export
 CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
-                                      filter = NULL, weights = NULL)
+                                      filter = NULL, weights = NULL, show.cell.values = "Automatic",
+                                      row.labels = "Yes", column.labels = "Yes")
 {
     dat <- if (input.type == "Variables") {
         var.dat <- AsNumeric(ProcessQVariables(input.data), binary = FALSE)
@@ -268,6 +274,10 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
 
     result <- CorrelationsWithSignificance(processed.data, wgt, spearman)
 
+    result$show.cell.values <- show.cell.values
+    result$row.labels <- row.labels
+    result$column.labels <- column.labels
+
     class(result) <- "CorrelationMatrix"
     return(result)
 }
@@ -275,15 +285,11 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
 #' \code{print.CorrelationMatrix}
 #'
 #' @param x An object of class \code{\link{CorrelationMatrix}}.
-#' @param show.cell.values Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
-#' values if there are <= 10 rows in the matrix.
-#' @param row.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
-#' @param column.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
 #' @param ... Other paramaters, not used.
 #' @details Displays a correlation matrix as a heatmap.
 #' @importFrom flipFormat FormatWithDecimals
 #' @export
-print.CorrelationMatrix <- function(x, ..., show.cell.values = "Automatic", row.labels = "Yes", column.labels = "Yes") {
+print.CorrelationMatrix <- function(x, ...) {
 
     n <- ncol(x$cor)
     cellnote <- matrix("", n, n)
@@ -297,9 +303,9 @@ print.CorrelationMatrix <- function(x, ..., show.cell.values = "Automatic", row.
             p.val[i, j] <- FormatWithDecimals(x$p[i, j], 3)
         }
 
-    show.cellnote.in.cell <- (n <= 10 && show.cell.values != "No") || show.cell.values == "Yes"
-    show.x.axes.labels <- column.labels == "Yes"
-    show.y.axes.labels <- row.labels == "Yes"
+    show.cellnote.in.cell <- (n <= 10 && x$show.cell.values != "No") || x$show.cell.values == "Yes"
+    show.x.axes.labels <- x$column.labels == "Yes"
+    show.y.axes.labels <- x$row.labels == "Yes"
 
     tooltip.info <- list("t-statistic" = t.stat,
                          "p-value" = p.val)
