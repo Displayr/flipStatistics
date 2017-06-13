@@ -13,10 +13,11 @@ CorrelationMatrix(input.type = "Variables", input.data, use.names = FALSE,
 \arguments{
 \item{input.type}{One of \code{"Variables"}, \code{"Questions"} or \code{"Table"}.}
 
-\item{input.data}{Either a list of vectors for \code{"Variables"}, a list of data.frames for \code{"Questions"},
-or a matrix for \code{"Table"} where the correlation is calculated between the columns.}
+\item{input.data}{Either a \code{\link{data.frame}} for \code{"Variables"}, a \code{\link{list}} of
+data.frames for \code{"Questions"}, or a \code{\link{matrix}} for \code{"Table"} where
+the correlation is calculated between the columns.}
 
-\item{use.names}{Boolean indicating whether to use names in place of labels.}
+\item{use.names}{Whether to use names in place of labels.}
 
 \item{ignore.columns}{For \code{"Questions"}, these are a list of question categories to ignore. For \code{"Table"},
 these are a list of columns and rows in the source table to ignore. Typically \code{c("NET", "Total", "SUM")}.}
@@ -26,7 +27,7 @@ or \code{"Exclude cases with missing data"}.}
 
 \item{spearman}{Boolean whether to compute Spearman's correlation instead of Pearson's correlation.}
 
-\item{filter}{An optional vector specifying a subset of values to be used.}
+\item{filter}{An optional logical vector specifying a subset of values to be used.}
 
 \item{weights}{An optional vector of sampling weights.}
 

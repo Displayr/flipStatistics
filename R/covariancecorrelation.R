@@ -196,15 +196,16 @@ SpearmanRanks <- function(x, weights)
 #'
 #' @description Produces a correlation matrix.
 #' @param input.type One of \code{"Variables"}, \code{"Questions"} or \code{"Table"}.
-#' @param input.data Either a list of vectors for \code{"Variables"}, a list of data.frames for \code{"Questions"},
-#' or a matrix for \code{"Table"} where the correlation is calculated between the columns.
-#' @param use.names Boolean indicating whether to use names in place of labels.
+#' @param input.data Either a \code{\link{data.frame}} for \code{"Variables"}, a \code{\link{list}} of
+#' data.frames for \code{"Questions"}, or a \code{\link{matrix}} for \code{"Table"} where
+#' the correlation is calculated between the columns.
+#' @param use.names Whether to use names in place of labels.
 #' @param ignore.columns For \code{"Questions"}, these are a list of question categories to ignore. For \code{"Table"},
 #' these are a list of columns and rows in the source table to ignore. Typically \code{c("NET", "Total", "SUM")}.
 #' @param missing.data Treatment of missing data. Options are \code{"Use partial data"}, \code{"Error if missing data"},
 #' or \code{"Exclude cases with missing data"}.
 #' @param spearman Boolean whether to compute Spearman's correlation instead of Pearson's correlation.
-#' @param filter An optional vector specifying a subset of values to be used.
+#' @param filter An optional logical vector specifying a subset of values to be used.
 #' @param weights An optional vector of sampling weights.
 #' @param show.cell.values Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
 #' values if there are <= 10 rows in the matrix.
@@ -245,7 +246,7 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
         df <- AsNumeric(data.frame(mat, check.names = FALSE))
         if (!is.null(weights))
             warning("Weights applied to this item have been ignored as they are not applicable when the input is a table.")
-        if (any(filter != 1))
+        if (!is.null(filter) && any(!filter))
             warning("Filter(s) applied to this item have been ignored as they are not applicable when the input is a table.")
         df
     } else
@@ -255,6 +256,13 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
         rep(1, nrow(dat))
     } else
         weights
+    if (length(wgt) != nrow(dat))
+        stop("Input data and weights must be same length.")
+
+    if (is.null(filter) || (length(filter) == 1 && filter == TRUE))
+        filter <- rep(TRUE, nrow(dat))
+    if (length(filter) != nrow(dat))
+        stop("Input data and filter must be same length.")
 
     if (input.type != "Table") {
         dat <- dat[filter, ]
@@ -268,7 +276,7 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
     } else if (missing.data == "Use partial data") {
         RemoveCasesWithAllNA(dat)
     } else
-        stop(c("Option not handled:", missing.data))
+        stop(c("Missing data option not handled: ", missing.data))
 
     wgt <- wgt[row.names(dat) %in% rownames(processed.data)]
 
