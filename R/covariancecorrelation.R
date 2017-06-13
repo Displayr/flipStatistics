@@ -259,7 +259,7 @@ CorrelationMatrix.default <- function(input.type, input.data, use.names = FALSE,
     if (length(wgt) != nrow(dat))
         stop("Input data and weights must be same length.")
 
-    if (is.null(filter) || (length(filter) == 1 && filter == TRUE))
+    if (is.null(filter) || (length(filter) == 1 && filter == TRUE) || input.type == "Table")
         filter <- rep(TRUE, nrow(dat))
     if (length(filter) != nrow(dat))
         stop("Input data and filter must be same length.")
