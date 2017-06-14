@@ -82,18 +82,14 @@ test_that("Correlation significance",
 
 test_that("CorrelationMatrix",
 {
-    expect_error(CorrelationMatrix(input.type = "Variables", input.data = test.data.2, missing.data = "wrong",
+    expect_error(CorrelationMatrix(input.data = test.data.2, missing.data = "wrong",
                                    filter = NULL, weights = NULL), "Missing data option not handled: wrong")
-    expect_error(CorrelationMatrix(input.type = "Variables", input.data = test.data.2, missing.data = "Error if missing data",
+    expect_error(CorrelationMatrix(input.data = test.data.2, missing.data = "Error if missing data",
                                    filter = NULL, weights = NULL), "The data contains missing values. Change the 'missing' option to run the analysis.")
-    expect_error(CorrelationMatrix(input.type = "Variables", input.data = test.data.2,
+    expect_error(CorrelationMatrix(input.data = test.data.2,
                                    filter = c(T, F), weights = NULL), "Input data and filter must be same length.")
-    expect_error(CorrelationMatrix(input.type = "Variables", input.data = test.data.2,
+    expect_error(CorrelationMatrix(input.data = test.data.2,
                                    filter = NULL, weights = c(1,2,3)), "Input data and weights must be same length.")
-    expect_warning(CorrelationMatrix(input.type = "Table", input.data = test.data.2,
-                                   filter = test.weight > 1, weights = NULL))
-    expect_warning(CorrelationMatrix(input.type = "Table", input.data = test.data.2,
-                                     filter = NULL, weights = test.weight))
-    expect_error(CorrelationMatrix(input.type = "Variables", input.data = test.data.2,
+    expect_error(CorrelationMatrix(input.data = test.data.2,
                                    filter = T, weights = test.weight), NA)
 })

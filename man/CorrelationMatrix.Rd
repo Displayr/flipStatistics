@@ -2,25 +2,21 @@
 % Please edit documentation in R/covariancecorrelation.R
 \name{CorrelationMatrix}
 \alias{CorrelationMatrix}
-\title{\code{CorrealtionMatrix}}
+\title{\code{CorrelationMatrix}}
 \usage{
-CorrelationMatrix(input.type = "Variables", input.data, use.names = FALSE,
-  ignore.columns = "", missing.data = "Use partial data",
-  spearman = FALSE, filter = NULL, weights = NULL,
-  show.cell.values = "Automatic", row.labels = "Yes",
+CorrelationMatrix(input.data, use.names = FALSE, ignore.columns = "",
+  missing.data = "Use partial data", spearman = FALSE, filter = NULL,
+  weights = NULL, show.cell.values = "Automatic", row.labels = "Yes",
   column.labels = "Yes")
 }
 \arguments{
-\item{input.type}{One of \code{"Variables"}, \code{"Questions"} or \code{"Table"}.}
-
-\item{input.data}{Either a \code{\link{data.frame}} for \code{"Variables"}, a \code{\link{list}} of
-data.frames for \code{"Questions"}, or a \code{\link{matrix}} for \code{"Table"} where
-the correlation is calculated between the columns.}
+\item{input.data}{Either a \code{\link{data.frame}}, a \code{\link{list}} of
+\code{\link{data.frame}}s and/or \code{\link{vector}}s, or a \code{\link{matrix}}.}
 
 \item{use.names}{Whether to use names in place of labels.}
 
-\item{ignore.columns}{For \code{"Questions"}, these are a list of question categories to ignore. For \code{"Table"},
-these are a list of columns and rows in the source table to ignore. Typically \code{c("NET", "Total", "SUM")}.}
+\item{ignore.columns}{A list of names of columns to ignore. When \code{input.data}
+is a \code{\link{matrix}}, rows are also ignored. Typically \code{c("NET", "Total", "SUM")}.}
 
 \item{missing.data}{Treatment of missing data. Options are \code{"Use partial data"}, \code{"Error if missing data"},
 or \code{"Exclude cases with missing data"}.}
@@ -39,5 +35,5 @@ values if there are <= 10 rows in the matrix.}
 \item{column.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
 }
 \description{
-Produces a correlation matrix.
+Produces a correlation matrix from columns of data.
 }
