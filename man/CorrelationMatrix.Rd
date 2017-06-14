@@ -4,12 +4,15 @@
 \alias{CorrelationMatrix}
 \title{\code{CorrelationMatrix}}
 \usage{
-CorrelationMatrix(input.data, use.names = FALSE, ignore.columns = "",
-  missing.data = "Use partial data", spearman = FALSE, filter = NULL,
-  weights = NULL, show.cell.values = "Automatic", row.labels = "Yes",
+CorrelationMatrix(input.type = NULL, input.data, use.names = FALSE,
+  ignore.columns = "", missing.data = "Use partial data",
+  spearman = FALSE, filter = NULL, weights = NULL,
+  show.cell.values = "Automatic", row.labels = "Yes",
   column.labels = "Yes")
 }
 \arguments{
+\item{input.type}{Deprecated. Now automatically deduced from \code{input.data}.}
+
 \item{input.data}{Either a \code{\link{data.frame}}, a \code{\link{list}} of
 \code{\link{data.frame}}s and/or \code{\link{vector}}s, or a \code{\link{matrix}}.}
 

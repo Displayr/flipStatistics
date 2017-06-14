@@ -195,6 +195,7 @@ SpearmanRanks <- function(x, weights)
 #' \code{CorrelationMatrix}
 #'
 #' @description Produces a correlation matrix from columns of data.
+#' @param input.type Deprecated. Now automatically deduced from \code{input.data}.
 #' @param input.data Either a \code{\link{data.frame}}, a \code{\link{list}} of
 #' \code{\link{data.frame}}s and/or \code{\link{vector}}s, or a \code{\link{matrix}}.
 #' @param use.names Whether to use names in place of labels.
@@ -210,7 +211,7 @@ SpearmanRanks <- function(x, weights)
 #' @param row.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
 #' @param column.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
 #' @export
-CorrelationMatrix <- function(input.data, use.names = FALSE, ignore.columns = "",
+CorrelationMatrix <- function(input.type = NULL, input.data, use.names = FALSE, ignore.columns = "",
                               missing.data = "Use partial data", spearman = FALSE,
                               filter = NULL, weights = NULL, show.cell.values = "Automatic",
                               row.labels = "Yes", column.labels = "Yes")
@@ -221,7 +222,7 @@ CorrelationMatrix <- function(input.data, use.names = FALSE, ignore.columns = ""
 # Default method for CorrelationMatrix.
 #' @importFrom flipData ErrorIfMissingDataFound GetTidyTwoDimensionalArray RemoveCasesWithAllNA RemoveCasesWithAnyNA AsDataFrame
 #' @export
-CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.columns = "",
+CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
                                       filter = NULL, weights = NULL, show.cell.values = "Automatic",
                                       row.labels = "Yes", column.labels = "Yes")
