@@ -270,7 +270,7 @@ CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names =
 #' @param x An object of class \code{\link{CorrelationMatrix}}.
 #' @param ... Other paramaters, not used.
 #' @details Displays a correlation matrix as a heatmap.
-#' @importFrom flipFormat FormatWithDecimals
+#' @importFrom flipFormat FormatAsReal
 #' @export
 print.CorrelationMatrix <- function(x, ...) {
 
@@ -281,9 +281,9 @@ print.CorrelationMatrix <- function(x, ...) {
     for (i in 1:n)
         for (j in 1:n)
         {
-            cellnote[i, j] <- FormatWithDecimals(x$cor[i, j], 2)
-            t.stat[i, j] <- FormatWithDecimals(x$t[i, j], 3)
-            p.val[i, j] <- FormatWithDecimals(x$p[i, j], 3)
+            cellnote[i, j] <- FormatAsReal(x$cor[i, j], decimals = 2)
+            t.stat[i, j] <- FormatAsReal(x$t[i, j], decimals = 3)
+            p.val[i, j] <- FormatAsReal(x$p[i, j], decimals = 3)
         }
 
     show.cellnote.in.cell <- (n <= 10 && x$show.cell.values != "No") || x$show.cell.values == "Yes"
