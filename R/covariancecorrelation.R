@@ -272,6 +272,7 @@ CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names =
 #' @details Displays a correlation matrix as a heatmap.
 #' @importFrom flipFormat FormatAsReal
 #' @export
+#' @method print CorrelationMatrix
 print.CorrelationMatrix <- function(x, ...) {
 
     n <- ncol(x$cor)
