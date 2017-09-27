@@ -220,7 +220,7 @@ CorrelationMatrix <- function(input.type = NULL, input.data, use.names = FALSE, 
 }
 
 # Default method for CorrelationMatrix.
-#' @importFrom flipData ErrorIfMissingDataFound GetTidyTwoDimensionalArray RemoveCasesWithAllNA RemoveCasesWithAnyNA AsDataFrame
+#' @importFrom flipData ErrorIfMissingDataFound RemoveCasesWithAllNA RemoveCasesWithAnyNA AsDataFrame
 #' @export
 CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
