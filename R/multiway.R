@@ -77,6 +77,8 @@ Multiway <- function(rows,
         n.rows <- nrow(result)
         n.columns <- nrow(columns$labels)
         n.p <- n.rows * n.columns
+        if (n.p > 1e7)
+            stop("The size of the multiway table is too large because there are too many different variables wth too many different levels. This may be fixed by removing numeric variables with a wide range of values.")
         m <- matrix(if(has.numeric) NA else 0, n.rows, n.columns)
         column.labels <- apply(columns$labels, 1, paste, collapse = "\n")
         if (has.numeric)

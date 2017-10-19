@@ -40,6 +40,7 @@ test_that("Crosstab",
               sb <- runif(327) > .5
               f <- Multiway(data.frame(d1, q8), data.frame(d4, q7), hide.empty.rows = TRUE, weights = wgt, subset = sb)
               expect_equal(sum(f[,-1:-2]), sum(xtabs(wgt~d1 + q8 + d4 + q7, subset = sb)))
+              expect_error(Multiway(data.frame(d1), columns = data.frame(d2, d4, q1a, q1b, q2a, q2b, q2c)), "The size of the multiway.")
           })
 
 test_that("Table of means",
