@@ -13,15 +13,13 @@ Suggests:
     flipExampleData,
     weights
 Imports:
-    flipData,
     flipFormat,
     flipTransformations,
     rhtmlHeatmap,
     survey
 Remotes:
-    Displayr/flipU,
-    Displayr/flipData,
-    Displayr/flipTransformations,
+    Displayr/flipExampleData,
     Displayr/flipFormat,
+    Displayr/flipTransformations,
     Displayr/rhtmlHeatmap
 RoxygenNote: 6.0.1

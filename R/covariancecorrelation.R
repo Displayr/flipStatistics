@@ -220,7 +220,7 @@ CorrelationMatrix <- function(input.type = NULL, input.data, use.names = FALSE, 
 }
 
 # Default method for CorrelationMatrix.
-#' @importFrom flipData ErrorIfMissingDataFound RemoveCasesWithAllNA RemoveCasesWithAnyNA AsDataFrame
+#' @importFrom flipTransformations AsDataFrame
 #' @export
 CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
@@ -245,13 +245,13 @@ CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names =
     wgt <- wgt[filter]
 
     processed.data <- if (missing.data == "Error if missing data") {
-        ErrorIfMissingDataFound(dat)
-    } else if (missing.data == "Exclude cases with missing data") {
-        RemoveCasesWithAnyNA(dat)
-    } else if (missing.data == "Use partial data") {
-        RemoveCasesWithAllNA(dat)
-    } else
-        stop(c("Missing data option not handled: ", missing.data))
+            errorIfMissingDataFound(dat)
+        } else if (missing.data == "Exclude cases with missing data") {
+            removeCasesWithAnyNA(dat)
+        } else if (missing.data == "Use partial data") {
+            removeCasesWithAllNA(dat)
+        } else
+            stop("Missing data option not handled: ", missing.data)
 
     wgt <- wgt[row.names(dat) %in% rownames(processed.data)]
 
@@ -265,6 +265,38 @@ CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names =
     return(result)
 }
 
+
+#' \code{RemoveCasesWithAnyNA}
+#'
+#' @description Remove rows which contain NA.
+#' @param x The input dataframe.
+removeCasesWithAnyNA <- function(x)
+{
+    x[apply(is.na(x), 1, sum) == 0, , drop = FALSE]
+}
+
+
+errorIfMissingDataFound <- function(data)
+{
+    if (any(is.na(data)))
+        missingDataFail()
+    data
+}
+
+missingDataFail <- function()
+{
+    stop("The data contains missing values. Change the 'missing' option to run the analysis.")
+}
+
+
+#' \code{RemoveCasesWithAllNA}
+#'
+#' @description Remove rows which are all NA.
+#' @param x The input dataframe.
+removeCasesWithAllNA <- function(x)
+{
+    x[apply(is.na(x), 1, sum) < ncol(x), , drop = FALSE]
+}
 #' \code{print.CorrelationMatrix}
 #'
 #' @param x An object of class \code{\link{CorrelationMatrix}}.
