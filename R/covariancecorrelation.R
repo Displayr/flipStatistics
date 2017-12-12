@@ -158,14 +158,14 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                 }
                 else
                 {
-                dsgn <- svydesign(ids = ~1, weights = wgt, data = pair)
-                v <- svyvar(pair, dsgn)
-                correlations[i, j] <- v[1, 2] / sqrt(v[1, 1] * v[2, 2])
-                correlations[j, i] <- correlations[i, j]
-                t.stats[i, j] <- v[1, 2] / SE(v)[2]
-                t.stats[j, i] <- t.stats[i, j]
-                p.values[i, j] <- 2 * pt(-abs(t.stats[i, j]), sum(ind) - 2)
-                p.values[j, i] <- p.values[i, j]
+                    dsgn <- svydesign(ids = ~1, weights = wgt, data = pair)
+                    v <- svyvar(pair, dsgn)
+                    correlations[i, j] <- v[1, 2] / sqrt(v[1, 1] * v[2, 2])
+                    correlations[j, i] <- correlations[i, j]
+                    t.stats[i, j] <- v[1, 2] / SE(v)[2]
+                    t.stats[j, i] <- t.stats[i, j]
+                    p.values[i, j] <- 2 * suppressWarnings(pt(-abs(t.stats[i, j]), sum(ind) - 2))
+                    p.values[j, i] <- p.values[i, j]
                 }
             }
             else
