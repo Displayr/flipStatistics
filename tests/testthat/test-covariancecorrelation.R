@@ -82,6 +82,8 @@ test_that("Correlation significance",
 
 test_that("CorrelationMatrix",
 {
+    expect_error(CorrelationMatrix(input.data = test.data.2,
+                                   filter = rep(FALSE, nrow(test.data.2)), weights = NULL), "No data remains after applying any filter and treatment of missing data.")
     expect_error(CorrelationMatrix(input.data = test.data.2, missing.data = "wrong",
                                    filter = NULL, weights = NULL), "Missing data option not handled: wrong")
     expect_error(CorrelationMatrix(input.data = test.data.2, missing.data = "Error if missing data",

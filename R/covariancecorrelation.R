@@ -150,6 +150,14 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                 else
                     data[ind, c(i, j)]
 
+                if (nrow(pair) == 1)
+                {
+                    correlations[i, j] <- 1
+                    t.stats[i, j] <- Inf
+                    p.values[i, j] <- 0
+                }
+                else
+                {
                 dsgn <- svydesign(ids = ~1, weights = wgt, data = pair)
                 v <- svyvar(pair, dsgn)
                 correlations[i, j] <- v[1, 2] / sqrt(v[1, 1] * v[2, 2])
@@ -158,6 +166,7 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                 t.stats[j, i] <- t.stats[i, j]
                 p.values[i, j] <- 2 * pt(-abs(t.stats[i, j]), sum(ind) - 2)
                 p.values[j, i] <- p.values[i, j]
+                }
             }
             else
             {
@@ -252,6 +261,9 @@ CorrelationMatrix.default <- function(input.type = NULL, input.data, use.names =
             removeCasesWithAllNA(dat)
         } else
             stop("Missing data option not handled: ", missing.data)
+
+    if (nrow(processed.data) == 0)
+        stop("No data remains after applying any filter and treatment of missing data.")
 
     wgt <- wgt[row.names(dat) %in% rownames(processed.data)]
 
