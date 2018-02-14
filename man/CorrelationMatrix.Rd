@@ -4,15 +4,12 @@
 \alias{CorrelationMatrix}
 \title{\code{CorrelationMatrix}}
 \usage{
-CorrelationMatrix(input.type = NULL, input.data, use.names = FALSE,
-  ignore.columns = "", missing.data = "Use partial data",
-  spearman = FALSE, filter = NULL, weights = NULL,
-  show.cell.values = "Automatic", row.labels = "Yes",
-  column.labels = "Yes")
+CorrelationMatrix(input.data, use.names = FALSE, ignore.columns = "",
+  missing.data = "Use partial data", spearman = FALSE, filter = NULL,
+  weights = NULL, show.cell.values = "Automatic", row.labels = "Yes",
+  column.labels = "Yes", input.type = NULL)
 }
 \arguments{
-\item{input.type}{Deprecated. Now automatically deduced from \code{input.data}.}
-
 \item{input.data}{Either a \code{\link{data.frame}}, a \code{\link{list}} of
 \code{\link{data.frame}}s and/or \code{\link{vector}}s, or a \code{\link{matrix}}.}
 
@@ -36,6 +33,8 @@ values if there are <= 10 rows in the matrix.}
 \item{row.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
 
 \item{column.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
+
+\item{input.type}{Deprecated. Now automatically deduced from \code{input.data}.}
 }
 \description{
 Produces a correlation matrix from columns of data.
