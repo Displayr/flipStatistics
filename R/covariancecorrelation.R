@@ -150,7 +150,13 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                 else
                     data[ind, c(i, j)]
 
-                if (nrow(pair) == 1)
+                if (nrow(pair) == 0)
+                {
+                    correlations[i, j] <- NA
+                    t.stats[i, j] <- NA
+                    p.values[i, j] <- NA
+                }
+                else if (nrow(pair) == 1)
                 {
                     correlations[i, j] <- 1
                     t.stats[i, j] <- Inf
@@ -161,12 +167,12 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                     dsgn <- svydesign(ids = ~1, weights = wgt, data = pair)
                     v <- svyvar(pair, dsgn)
                     correlations[i, j] <- v[1, 2] / sqrt(v[1, 1] * v[2, 2])
-                    correlations[j, i] <- correlations[i, j]
                     t.stats[i, j] <- v[1, 2] / SE(v)[2]
-                    t.stats[j, i] <- t.stats[i, j]
                     p.values[i, j] <- 2 * suppressWarnings(pt(-abs(t.stats[i, j]), sum(ind) - 2))
-                    p.values[j, i] <- p.values[i, j]
                 }
+                correlations[j, i] <- correlations[i, j]
+                t.stats[j, i] <- t.stats[i, j]
+                p.values[j, i] <- p.values[i, j]
             }
             else
             {
