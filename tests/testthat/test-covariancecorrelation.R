@@ -6,8 +6,12 @@ test.data.1 <- pcaPhoneTestData$data.set # Most cases have some missing observat
 test.data.2 <- pcaPhoneTestData$data.set.original # Most cases do not have missing observations (named "q23" in SPSS file)
 test.weight <- pcaPhoneTestData$weight
 test.calibrated.weight <- pcaPhoneTestData$q.calibrated.weight
-single.values <- matrix(NA, ncol = 2, nrow = 100)
-single.values[1, 1] <- single.values[2, 2] <- 1
+single.values <- matrix(NA, ncol = 4, nrow = 100)
+single.values[1, 1] <- 1
+single.values[2, 2] <- 2
+single.values[2, 3] <- 3
+single.values[, 4] <- 4
+
 
 # Note that comparisons with SPSS using weighted data will differ when these functions are used in
 # DisplayR because there we always supply QCalibratedWeight.
@@ -96,5 +100,6 @@ test_that("CorrelationMatrix",
                                    filter = NULL, weights = c(1,2,3)), "Input data and weights must be same length.")
     expect_error(CorrelationMatrix(input.data = test.data.2,
                                    filter = T, weights = test.weight), NA)
-    expect_error(CorrelationMatrix(input.data = single.values), NA)
+    cm <- expect_error(CorrelationMatrix(input.data = single.values), NA)
+    expect_true(all(is.nan(cm$cor[row(cm$cor) != col(cm$cor)])))
 })
