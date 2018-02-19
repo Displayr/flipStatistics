@@ -150,17 +150,11 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                 else
                     data[ind, c(i, j)]
 
-                if (nrow(pair) == 0)
+                if (nrow(pair) <= 1)
                 {
-                    correlations[i, j] <- NA
+                    correlations[i, j] <- NaN
                     t.stats[i, j] <- NA
                     p.values[i, j] <- NA
-                }
-                else if (nrow(pair) == 1)
-                {
-                    correlations[i, j] <- 1
-                    t.stats[i, j] <- Inf
-                    p.values[i, j] <- 0
                 }
                 else
                 {
