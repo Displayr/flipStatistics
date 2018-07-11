@@ -102,4 +102,7 @@ test_that("CorrelationMatrix",
                                    filter = T, weights = test.weight), NA)
     cm <- expect_error(CorrelationMatrix(input.data = single.values), NA)
     expect_true(all(is.nan(cm$cor[row(cm$cor) != col(cm$cor)])))
+    expect_error(dat <- ExtractChartData(cm), NA)
+    expect_is(dat, "matrix")
+    expect_equal(dim(dat), c(4, 4))
 })
