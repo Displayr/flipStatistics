@@ -1,19 +1,6 @@
-#' \code{ExtractChartData}
-#'
-#' @description Returns data which is appropriate for charting
-#'   The exact from of the data depends on the object
-#' @param x Object containing the data. This is usually the output of a regression or machine learning output
+#' @importFrom flipFormat ExtractChartData
 #' @export
-ExtractChartData <- function(x)
-{
-    UseMethod("ExtractChartData")
-}
-
-#' @export
-ExtractChartData.default <- function(x)
-{
-    return(x)
-}
+flipFormat::ExtractChartData
 
 #' @export
 ExtractChartData.CorrelationMatrix <- function(x)
