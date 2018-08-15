@@ -238,6 +238,10 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
 {
     dat <- AsDataFrame(input.data, use.names, ignore.columns)
 
+    if (ncol(dat) < 2)
+        stop("Two columns of data or more are required to compute a ",
+             "correlation matrix.")
+
     wgt <- if (is.null(weights)) {
         rep(1, nrow(dat))
     } else
