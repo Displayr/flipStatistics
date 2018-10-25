@@ -54,7 +54,10 @@ SumOfSquaresByGroup <- function(x, group, weights = NULL)
 #' @export
 ResidualSumOfSquares <- function(x, group, weights = NULL)
 {
-    sum(SumOfSquaresByGroup(x, group, weights))
+    ss <- sum(SumOfSquaresByGroup(x, group, weights))
+    if (is.na(ss))
+        ss <- Inf
+    ss
 }
 
 

@@ -4,9 +4,9 @@
 \alias{Multiway}
 \title{\code{Multiway}}
 \usage{
-Multiway(rows, columns = NULL, numeric = NULL, numeric.statistic = "Mean",
-  hide.empty.rows = FALSE, hide.empty.columns = FALSE, subset = NULL,
-  weights = NULL)
+Multiway(rows, columns = NULL, numeric = NULL,
+  numeric.statistic = "Mean", hide.empty.rows = FALSE,
+  hide.empty.columns = FALSE, subset = NULL, weights = NULL)
 }
 \arguments{
 \item{rows}{A \code{\link{data.frame}} of variables to show in the rows of the table.}

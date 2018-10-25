@@ -4,8 +4,8 @@
 \alias{WeightedTable}
 \title{\code{WeightedTable}}
 \usage{
-WeightedTable(..., weights = NULL, exclude = if (useNA == "no") c(NA, NaN),
-  useNA = c("no", "ifany", "always"), dnn = list.names(...),
+WeightedTable(..., weights = NULL, exclude = if (useNA == "no") c(NA,
+  NaN), useNA = c("no", "ifany", "always"), dnn = list.names(...),
   deparse.level = 1)
 }
 \arguments{
