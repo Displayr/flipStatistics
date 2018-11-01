@@ -3,6 +3,7 @@
 S3method(CorrelationMatrix,default)
 S3method(ExtractChartData,CorrelationMatrix)
 S3method(ExtractChartData,ts)
+S3method(ExtractChartData,xtabs)
 S3method(print,CorrelationMatrix)
 export(Correlation)
 export(CorrelationMatrix)

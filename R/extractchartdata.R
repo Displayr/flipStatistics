@@ -26,3 +26,10 @@ ExtractChartData.ts <- function(x)
     }
     return(x)
 }
+
+
+#' @export
+ExtractChartData.xtabs <- function(x)
+{
+    return(unclass(x))
+}
