@@ -218,11 +218,15 @@ SpearmanRanks <- function(x, weights)
 #' values if there are <= 10 rows in the matrix.
 #' @param row.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
 #' @param column.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
+#' @param colors A vector of colors used to create the colorbar. If not specified it will default to \code{RdBu} from colorbrewer.
+#' @param colors.min.value Lower bound of the colorbar
+#' @param colors.max.value Upper bound of the colorbar
 #' @param input.type Deprecated. Now automatically deduced from \code{input.data}.
 #' @export
 CorrelationMatrix <- function(input.data, use.names = FALSE, ignore.columns = "",
                               missing.data = "Use partial data", spearman = FALSE,
                               filter = NULL, weights = NULL, show.cell.values = "Automatic",
+                              colors = NULL, colors.min.value = -1, colors.max.value = 1,
                               row.labels = "Yes", column.labels = "Yes", input.type = NULL)
 {
     UseMethod("CorrelationMatrix")
@@ -234,6 +238,7 @@ CorrelationMatrix <- function(input.data, use.names = FALSE, ignore.columns = ""
 CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
                                       filter = NULL, weights = NULL, show.cell.values = "Automatic",
+                                      colors = NULL, colors.min.value = -1, colors.max.value = 1,
                                       row.labels = "Yes", column.labels = "Yes", input.type = NULL)
 {
     dat <- AsDataFrame(input.data, use.names, ignore.columns)
@@ -272,10 +277,15 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
     wgt <- wgt[row.names(dat) %in% rownames(processed.data)]
 
     result <- CorrelationsWithSignificance(processed.data, wgt, spearman)
+    result$colors.min.value <- as.numeric(colors.min.value)
+    result$colors.max.value <- as.numeric(colors.max.value)
+    result$cor[which(result$cor < result$colors.min.value)] <- NA
+    result$cor[which(result$cor > result$colors.max.value)] <- NA
 
     result$show.cell.values <- show.cell.values
     result$row.labels <- row.labels
     result$column.labels <- column.labels
+    result$colors <- if (is.null(colors)) "RdBu" else colors
 
     class(result) <- "CorrelationMatrix"
     return(result)
@@ -343,13 +353,13 @@ print.CorrelationMatrix <- function(x, ...) {
                          "p-value" = p.val)
 
     correlation.matrix <- rhtmlHeatmap::Heatmap(x$cor, Rowv = NULL, Colv = NULL,
-                                                cellnote = cellnote, colors = "RdBu",
+                                                cellnote = cellnote, colors = x$colors,
                                                 show_cellnote_in_cell = show.cellnote.in.cell,
                                                 xaxis_location = "bottom", yaxis_location = "left",
                                                 lower_triangle = TRUE, cexRow = 0.79,
                                                 xaxis_hidden = !show.x.axes.labels,
                                                 yaxis_hidden = !show.y.axes.labels,
-                                                color_range = c(-1, 1),
+                                                color_range = c(x$colors.min.value, x$colors.max.value),
                                                 extra_tooltip_info = tooltip.info)
 
     print(correlation.matrix)

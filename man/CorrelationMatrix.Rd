@@ -6,7 +6,8 @@
 \usage{
 CorrelationMatrix(input.data, use.names = FALSE, ignore.columns = "",
   missing.data = "Use partial data", spearman = FALSE, filter = NULL,
-  weights = NULL, show.cell.values = "Automatic", row.labels = "Yes",
+  weights = NULL, show.cell.values = "Automatic", colors = NULL,
+  colors.min.value = -1, colors.max.value = 1, row.labels = "Yes",
   column.labels = "Yes", input.type = NULL)
 }
 \arguments{
@@ -29,6 +30,12 @@ or \code{"Exclude cases with missing data"}.}
 
 \item{show.cell.values}{Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
 values if there are <= 10 rows in the matrix.}
+
+\item{colors}{A vector of colors used to create the colorbar. If not specified it will default to \code{RdBu} from colorbrewer.}
+
+\item{colors.min.value}{Lower bound of the colorbar}
+
+\item{colors.max.value}{Upper bound of the colorbar}
 
 \item{row.labels}{Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.}
 
