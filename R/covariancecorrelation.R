@@ -279,8 +279,6 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
     result <- CorrelationsWithSignificance(processed.data, wgt, spearman)
     result$colors.min.value <- as.numeric(colors.min.value)
     result$colors.max.value <- as.numeric(colors.max.value)
-    result$cor[which(result$cor < result$colors.min.value)] <- NA
-    result$cor[which(result$cor > result$colors.max.value)] <- NA
 
     result$show.cell.values <- show.cell.values
     result$row.labels <- row.labels
@@ -351,7 +349,8 @@ print.CorrelationMatrix <- function(x, ...) {
 
     tooltip.info <- list("t-statistic" = t.stat,
                          "p-value" = p.val)
-
+    x$cor[which(x$cor < x$colors.min.value)] <- NA
+    x$cor[which(x$cor > x$colors.max.value)] <- NA
     correlation.matrix <- rhtmlHeatmap::Heatmap(x$cor, Rowv = NULL, Colv = NULL,
                                                 cellnote = cellnote, colors = x$colors,
                                                 show_cellnote_in_cell = show.cellnote.in.cell,
