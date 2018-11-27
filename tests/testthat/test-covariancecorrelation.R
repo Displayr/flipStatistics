@@ -12,6 +12,8 @@ single.values[2, 2] <- 2
 single.values[2, 3] <- 3
 single.values[, 4] <- 4
 
+data("adult.2000", package = "flipExampleData")
+factor.data <- adult.2000[, !(names(adult.2000) %in% c("country", "education", "occupation"))]
 
 # Note that comparisons with SPSS using weighted data will differ when these functions are used in
 # DisplayR because there we always supply QCalibratedWeight.
@@ -106,3 +108,12 @@ test_that("CorrelationMatrix",
     expect_is(dat, "matrix")
     expect_equal(dim(dat), c(4, 4))
 })
+
+test_that("Correlation with factors",
+{
+    no.bin <- CorrelationMatrix(factor.data, categorical.as.binary = FALSE)
+    expect_equal(ncol(no.bin$cor), 11)
+    bin <- CorrelationMatrix(factor.data, categorical.as.binary = TRUE)
+    expect_equal(ncol(bin$cor), 35)
+})
+

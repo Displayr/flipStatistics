@@ -208,43 +208,48 @@ SpearmanRanks <- function(x, weights)
 #' \code{\link{data.frame}}s and/or \code{\link{vector}}s, or a \code{\link{matrix}}.
 #' @param use.names Whether to use names in place of labels.
 #' @param ignore.columns A list of names of columns to ignore. When \code{input.data}
-#' is a \code{\link{matrix}}, rows are also ignored. Typically \code{c("NET", "Total", "SUM")}.
+#'   is a \code{\link{matrix}}, rows are also ignored. Typically \code{c("NET", "Total", "SUM")}.
 #' @param missing.data Treatment of missing data. Options are \code{"Use partial data"}, \code{"Error if missing data"},
-#' or \code{"Exclude cases with missing data"}.
+#'   or \code{"Exclude cases with missing data"}.
 #' @param spearman Boolean whether to compute Spearman's correlation instead of Pearson's correlation.
 #' @param filter An optional logical vector specifying a subset of values to be used.
 #' @param weights An optional vector of sampling weights.
 #' @param show.cell.values Either \code{"Yes"}, \code{"No"} or \code{"Automatic"}. \code{"Automatic"} displays
-#' values if there are <= 10 rows in the matrix.
+#'   values if there are <= 10 rows in the matrix.
 #' @param row.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
 #' @param column.labels Either \code{"Yes"} or \code{"No"} indicating whether row labels should be displayed.
-#' @param colors A vector of colors used to create the colorbar. If not specified it will default to \code{RdBu} from colorbrewer.
+#' @param colors A vector of colors used to create the colorbar.
+#'   If not specified it will default to \code{RdBu} from colorbrewer.
 #' @param colors.min.value Lower bound of the colorbar
 #' @param colors.max.value Upper bound of the colorbar
+#' @param categorical.as.binary Whether to convert factors to dummy binary variables, or else their
+#'   levels are converted to integers.
 #' @param input.type Deprecated. Now automatically deduced from \code{input.data}.
 #' @export
 CorrelationMatrix <- function(input.data, use.names = FALSE, ignore.columns = "",
                               missing.data = "Use partial data", spearman = FALSE,
                               filter = NULL, weights = NULL, show.cell.values = "Automatic",
                               colors = NULL, colors.min.value = -1, colors.max.value = 1,
-                              row.labels = "Yes", column.labels = "Yes", input.type = NULL)
+                              row.labels = "Yes", column.labels = "Yes", input.type = NULL,
+                              categorical.as.binary = FALSE)
 {
     UseMethod("CorrelationMatrix")
 }
 
 # Default method for CorrelationMatrix.
-#' @importFrom flipTransformations AsDataFrame
+#' @importFrom flipTransformations AsDataFrame AsNumeric
 #' @export
 CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
                                       filter = NULL, weights = NULL, show.cell.values = "Automatic",
                                       colors = NULL, colors.min.value = -1, colors.max.value = 1,
-                                      row.labels = "Yes", column.labels = "Yes", input.type = NULL)
+                                      row.labels = "Yes", column.labels = "Yes", input.type = NULL,
+                                      categorical.as.binary = FALSE)
 {
-    dat <- AsDataFrame(input.data, use.names, ignore.columns)
+    dat <- AsDataFrame(input.data, use.names, ignore.columns, categorical.as.binary)
 
     if (ncol(dat) < 2)
-        stop("Two columns of data or more are required to compute a ",
+        stop("Two or more columns of data are required to compute a ",
              "correlation matrix.")
 
     wgt <- if (is.null(weights)) {

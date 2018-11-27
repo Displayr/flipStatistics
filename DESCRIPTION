@@ -20,7 +20,7 @@ Imports:
 Remotes:
     Displayr/flipExampleData,
     Displayr/flipFormat,
-    Displayr/flipTransformations,
+    Displayr/flipTransformations (>= 1.6.9),
     Displayr/rhtmlHeatmap
 RoxygenNote: 6.1.0
 Encoding: UTF-8
