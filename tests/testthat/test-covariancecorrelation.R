@@ -114,6 +114,6 @@ test_that("Correlation with factors",
     no.bin <- suppressWarnings(CorrelationMatrix(factor.data, categorical.as.binary = FALSE))
     expect_equal(ncol(no.bin$cor), 11)
     bin <- CorrelationMatrix(factor.data, categorical.as.binary = TRUE)
-    expect_equal(ncol(bin$cor), 35)
+    expect_equal(ncol(bin$cor), 29)
 })
 

@@ -246,7 +246,8 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
                                       row.labels = "Yes", column.labels = "Yes", input.type = NULL,
                                       categorical.as.binary = FALSE)
 {
-    dat <- AsDataFrame(input.data, use.names, ignore.columns, categorical.as.binary)
+    dat <- AsDataFrame(input.data, use.names, ignore.columns, categorical.as.binary,
+                       remove.first = TRUE)
 
     if (ncol(dat) < 2)
         stop("Two or more columns of data are required to compute a ",
