@@ -45,7 +45,7 @@ CovarianceAndCorrelationMatrix <- function(data,
     pairwise = FALSE,
     use.correlation = TRUE)
 {
-    # Create the input correlation or convariance matrix
+    # Create the input correlation or covariance matrix
     if (is.null(weights))
     {   # Unweighted options
         use.string <- if (pairwise) "pairwise.complete.obs" else "complete.obs"
