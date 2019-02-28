@@ -291,6 +291,7 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
     result$colors <- if (is.null(colors)) "RdBu" else colors
 
     class(result) <- "CorrelationMatrix"
+    attr(result, "ChartData") <- ExtractChartData(result)
     return(result)
 }
 

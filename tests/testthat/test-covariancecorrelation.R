@@ -107,6 +107,7 @@ test_that("CorrelationMatrix",
     expect_error(dat <- ExtractChartData(cm), NA)
     expect_is(dat, "matrix")
     expect_equal(dim(dat), c(4, 4))
+    expect_equal(dat, attr(cm, "ChartData"))
 })
 
 test_that("Correlation with factors",
