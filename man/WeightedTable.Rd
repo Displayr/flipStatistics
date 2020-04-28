@@ -4,9 +4,14 @@
 \alias{WeightedTable}
 \title{\code{WeightedTable}}
 \usage{
-WeightedTable(..., weights = NULL, exclude = if (useNA == "no") c(NA,
-  NaN), useNA = c("no", "ifany", "always"), dnn = list.names(...),
-  deparse.level = 1)
+WeightedTable(
+  ...,
+  weights = NULL,
+  exclude = if (useNA == "no") c(NA, NaN),
+  useNA = c("no", "ifany", "always"),
+  dnn = list.names(...),
+  deparse.level = 1
+)
 }
 \arguments{
 \item{...}{one or more objects which can be interpretated as factors, or a list or dataframe whose components can be so interpreted}

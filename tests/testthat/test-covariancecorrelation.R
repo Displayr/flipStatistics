@@ -82,8 +82,10 @@ test_that("Correlation",
 
 test_that("Correlation significance",
 {
-    expect_equal(CorrelationsWithSignificance(test.data.1, test.weight)$cor[3,4], 0.151448808216322)
-    expect_equal(CorrelationsWithSignificance(test.data.1, test.weight)$p[3,4], 0.1227358415903436)
+    test.output <- CorrelationsWithSignificance(test.data.1, test.weight)
+    expect_equal(test.output$cor[3,4], 0.151448808216322)
+    expect_equal(test.output$p[3,4], 0.1227358415903436)
+    expect_true(all.equal(test.output$t, test.output$cor/test.output$standard.errors))
     expect_equal(CorrelationsWithSignificance(test.data.1, test.weight, spearman = TRUE)$cor[3,4], 0.1534977186961468)
     expect_equal(CorrelationsWithSignificance(test.data.1, test.weight, spearman = TRUE)$p[3,4], 0.09251195118913291)
 })

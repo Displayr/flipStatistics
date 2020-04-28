@@ -4,8 +4,12 @@
 \alias{CovarianceAndCorrelationMatrix}
 \title{\code{CovarianceAndCorrelationMatrix}}
 \usage{
-CovarianceAndCorrelationMatrix(data, weights = NULL, pairwise = FALSE,
-  use.correlation = TRUE)
+CovarianceAndCorrelationMatrix(
+  data,
+  weights = NULL,
+  pairwise = FALSE,
+  use.correlation = TRUE
+)
 }
 \arguments{
 \item{data}{A data frame containing the input data.}

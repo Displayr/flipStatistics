@@ -136,6 +136,7 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
     correlations <- mtrx
     t.stats <- mtrx
     p.values <- mtrx
+    std.errs <- mtrx
     not.na.weights <- !is.na(weights)
     for (i in 1:n)
     {
@@ -155,17 +156,21 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                     correlations[i, j] <- NaN
                     t.stats[i, j] <- NA
                     p.values[i, j] <- NA
+                    std.errs[i, j] <- NA
                 }
                 else
                 {
                     dsgn <- svydesign(ids = ~1, weights = wgt, data = pair)
                     v <- svyvar(pair, dsgn)
-                    correlations[i, j] <- v[1, 2] / sqrt(v[1, 1] * v[2, 2])
+                    tmp.val <- sqrt(v[1, 1] * v[2, 2])
+                    correlations[i, j] <- v[1, 2] / tmp.val
                     t.stats[i, j] <- v[1, 2] / SE(v)[2]
+                    std.errs[i, j] <- SE(v)[2] / tmp.val
                     p.values[i, j] <- 2 * suppressWarnings(pt(-abs(t.stats[i, j]), sum(ind) - 2))
                 }
                 correlations[j, i] <- correlations[i, j]
                 t.stats[j, i] <- t.stats[i, j]
+                std.errs[j, i] <- std.errs[i, j]
                 p.values[j, i] <- p.values[i, j]
             }
             else
@@ -173,10 +178,11 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                 correlations[i, i] <- 1
                 t.stats[i, i] <- Inf
                 p.values[i, i] <- 0
+                std.errs[i, i] <- 0
             }
         }
     }
-    list(cor = correlations, t = t.stats, p = p.values)
+    list(cor = correlations, t = t.stats, p = p.values, standard.errors = std.errs)
 }
 
 #' \code{SpearmanRanks}
