@@ -64,7 +64,7 @@ test_that("Data types for the numeric variable should be passed when reading in 
           {
               data(phone, package = "flipExampleData")
               attach(phone)
-            Multiway(list(q2, q3), list(q4), q25)
+            expect_error(Multiway(list(q2, q3), list(q4), q25), NA)
               detach(phone)
     # if (length(formNumeric) == 1) NULL else formNumeric,
     # numeric.statistic = formStatistic,

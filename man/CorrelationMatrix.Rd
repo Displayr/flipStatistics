@@ -4,12 +4,23 @@
 \alias{CorrelationMatrix}
 \title{\code{CorrelationMatrix}}
 \usage{
-CorrelationMatrix(input.data, use.names = FALSE, ignore.columns = "",
-  missing.data = "Use partial data", spearman = FALSE, filter = NULL,
-  weights = NULL, show.cell.values = "Automatic", colors = NULL,
-  colors.min.value = -1, colors.max.value = 1, row.labels = "Yes",
-  column.labels = "Yes", input.type = NULL,
-  categorical.as.binary = FALSE)
+CorrelationMatrix(
+  input.data,
+  use.names = FALSE,
+  ignore.columns = "",
+  missing.data = "Use partial data",
+  spearman = FALSE,
+  filter = NULL,
+  weights = NULL,
+  show.cell.values = "Automatic",
+  colors = NULL,
+  colors.min.value = -1,
+  colors.max.value = 1,
+  row.labels = "Yes",
+  column.labels = "Yes",
+  input.type = NULL,
+  categorical.as.binary = FALSE
+)
 }
 \arguments{
 \item{input.data}{Either a \code{\link{data.frame}}, a \code{\link{list}} of
