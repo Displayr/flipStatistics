@@ -13,6 +13,15 @@ CorrelationsWithSignificance(data, weights, spearman = FALSE)
 
 \item{spearman}{Whether to compute Spearman correlations instead of Pearson correlations.}
 }
+\value{
+A list with four elements \itemize{
+\item \code{correlation} A numeric correlation matrix of (possibly weighted) correlations computed on the input data.frame
+\item \code{standard.errors} A numeric matrix with the standard errors of the computed correlations above
+\item \code{statistics} A numeric matrix of the t-stastiscs computed based on the correlation and standard errors above
+\item \code{p.values} A numeric matrix of p-values computed based on the t-statistics and df computed from the
+ number of values used in the correlation calculation
+}
+}
 \description{
 Computes correlations with significance from zero.
 }

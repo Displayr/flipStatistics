@@ -124,6 +124,13 @@ Correlation <- function(x, y, weights = NULL, correlation = TRUE)
 #' @param data A numeric data frame
 #' @param weights A vector of weights
 #' @param spearman Whether to compute Spearman correlations instead of Pearson correlations.
+#' @return A list with four elements \itemize{
+#' \item \code{correlation} A numeric correlation matrix of (possibly weighted) correlations computed on the input data.frame
+#' \item \code{standard.errors} A numeric matrix with the standard errors of the computed correlations above
+#' \item \code{statistics} A numeric matrix of the t-stastiscs computed based on the correlation and standard errors above
+#' \item \code{p.values} A numeric matrix of p-values computed based on the t-statistics and df computed from the
+#'  number of values used in the correlation calculation
+#' }
 #' @importFrom survey svydesign svyvar SE
 #' @importFrom stats pt
 #' @export
@@ -164,8 +171,9 @@ CorrelationsWithSignificance <- function(data, weights, spearman = FALSE)
                     v <- svyvar(pair, dsgn)
                     tmp.val <- sqrt(v[1, 1] * v[2, 2])
                     correlations[i, j] <- v[1, 2] / tmp.val
-                    t.stats[i, j] <- v[1, 2] / SE(v)[2]
-                    std.errs[i, j] <- SE(v)[2] / tmp.val
+                    tmp.cov.se <- SE(v)[2]
+                    t.stats[i, j] <- v[1, 2] / tmp.cov.se
+                    std.errs[i, j] <- tmp.cov.se / tmp.val
                     p.values[i, j] <- 2 * suppressWarnings(pt(-abs(t.stats[i, j]), sum(ind) - 2))
                 }
                 correlations[j, i] <- correlations[i, j]
