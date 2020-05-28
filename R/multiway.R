@@ -21,7 +21,7 @@ Multiway <- function(rows,
                      weights = NULL)
 {
     if (!is.data.frame(rows))
-        rows <- data.frame(rows)
+        rows <- data.frame(rows, stringsAsFactors = TRUE)
 
     rows <- ProcessQVariables(rows)
     columns <- ProcessQVariables(columns)
@@ -38,7 +38,7 @@ Multiway <- function(rows,
     if (has.columns <- !is.null(columns))
     {
         if (!is.data.frame(columns))
-            columns <- data.frame(columns)
+            columns <- data.frame(columns, stringsAsFactors = TRUE)
         columns <- Interaction(columns, subset)
         n.rows <- nrow(result)
         values <- values + (columns$values - 1) * n.rows
@@ -142,7 +142,7 @@ Interaction <- function(data, subset)
         labels[, i] <- rep(levs, rep(prod.n.levels, n.levels))
         prod.n.levels <- prod.n.levels * n.levels
     }
-    labels <- data.frame(labels)
+    labels <- data.frame(labels, stringsAsFactors = TRUE)
     names(labels) <- Labels(data)
     list(labels = labels, values = values)
 }
