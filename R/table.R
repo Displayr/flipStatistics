@@ -15,8 +15,8 @@ Table <- function(formula, data, FUN = sum)
             stop("'FUN' can only be provided with a dependent variable.")
         return(xtabs(formula, data = data))
     }
-    data = aggregate(formula, data, FUN = FUN)
-    xtabs(formula, data = data)
+    data = aggregate(formula, data, FUN = FUN, drop = FALSE)
+    xtabs(formula, data = data, addNA = TRUE)
 }
 
 
