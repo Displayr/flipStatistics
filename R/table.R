@@ -16,7 +16,13 @@ Table <- function(formula, data, FUN = sum)
         return(xtabs(formula, data = data))
     }
     data = aggregate(formula, data, FUN = FUN, drop = FALSE)
-    xtabs(formula, data = data, addNA = TRUE)
+    xtabs(formula, data = data, addNA = FALSE)
+
+    # This is not quite right. If the statistic is 'Average'
+    # then the value for an empty level should be NaN
+    # But if the statistic is '%' (also calculated using mean)
+    # then the value for the empty level should be 0
+    #xtabs(formula, data = data, addNA = is.na(FUN(numeric(0))))
 }
 
 
