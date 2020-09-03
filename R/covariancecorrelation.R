@@ -2,22 +2,6 @@
 # 'X'.
 weightedPartialCovarianceMatrix <- function(X, weights, correlation = FALSE)
 {
-    if (is.null(weights) || all(weights == 1, na.rm = TRUE))
-    {
-        if (anyNA(X))
-            return(if (correlation) cor(X, use = "complete.obs") else cov(X, use = "complete.obs"))
-        else
-        {
-            X <- t(X) - colMeans(X)
-            if (correlation)
-                X <- X/sqrt(rowSums(X^2))
-            output.matrix <- tcrossprod(X)
-            if (!correlation)
-                output.matrix <- output.matrix/(nrow(X) - 1)
-            colnames(output.matrix) <- rownames(output.matrix) <- rownames(X)
-            return(output.matrix)
-        }
-    }
     # Removing missing or inappropriate weights.
     valid <- !is.na(weights) & weights > 0
     weights <- weights[valid]
@@ -29,9 +13,20 @@ weightedPartialCovarianceMatrix <- function(X, weights, correlation = FALSE)
         X <- X[not.all.missing, ]
         weights <- weights[not.all.missing]
     }
-    # Safe to use faster algorithm if no other missing data observed
+    # Use fast algorithms if no remaining missing values in X
     if (!anyNA(X))
     {
+        if (all(weights[-1] == weights[1]))
+        {
+            X <- t(X) - colMeans(X)
+            if (correlation)
+                X <- X/sqrt(rowSums(X^2))
+            output.matrix <- tcrossprod(X)
+            if (!correlation)
+                output.matrix <- output.matrix/(nrow(X) - 1)
+            colnames(output.matrix) <- rownames(output.matrix) <- rownames(X)
+            return(output.matrix)
+        }
         n.weights <- sum(weights)
         means <- colSums(weights * X)/n.weights
         X <- t(sqrt(weights) * (X - rep(means, each = nrow(X))))
@@ -43,11 +38,13 @@ weightedPartialCovarianceMatrix <- function(X, weights, correlation = FALSE)
         rownames(output.matrix) <- colnames(output.matrix) <- rownames(X)
         return(output.matrix)
     }
+    # Remaining scenario has missing data spread throughout the data and needs
+    # to be computed pairwise to correctly weight the data.
     num.cols <- ncol(X)
     output.matrix <- matrix(1, nrow = num.cols, ncol = num.cols,
                             dimnames = list(colnames(X), colnames(X)))
     for (row in (1L + as.integer(correlation)):num.cols)
-        for (col in 1:row)
+        for (col in seq(row))
         {
             output.matrix[row, col] <- Correlation(X[, row], X[, col], weights, correlation)
             if (col != row)
