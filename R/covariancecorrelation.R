@@ -53,24 +53,6 @@ weightedPartialCovarianceMatrix <- function(X, weights, correlation = FALSE)
     output.matrix
 }
 
-weightedPartialCovarianceMatrixOld <- function(data, weights, correlation = FALSE)
-{
-    num.cols <- ncol(data)
-    output.matrix <- matrix(1, nrow = num.cols, ncol = num.cols,
-                            dimnames = list(colnames(data), colnames(data)))
-    for (row in (1L + as.integer(correlation)):num.cols)
-    {
-        for (col in 1:row)
-        {
-            output.matrix[row, col] <- Correlation(data[, row], data[, col], weights, correlation)
-            if (col != row)
-                output.matrix[col, row] <- output.matrix[row, col]
-        }
-    }
-    return(output.matrix)
-}
-
-
 #' \code{CovarianceAndCorrelationMatrix}
 #'
 #' @description Generate a covariance or correlation matrix from weighted or
