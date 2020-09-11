@@ -13,31 +13,9 @@ weightedPartialCovarianceMatrix <- function(X, weights, correlation = FALSE)
         X <- X[not.all.missing, ]
         weights <- weights[not.all.missing]
     }
-    # Use fast algorithms if no remaining missing values in X
+    # Use fast algorithm if no remaining missing values in X
     if (!anyNA(X))
-    {
-        if (all(weights[-1] == weights[1]))
-        {
-            X <- t(X) - colMeans(X)
-            if (correlation)
-                X <- X/sqrt(rowSums(X^2))
-            output.matrix <- tcrossprod(X)
-            if (!correlation)
-                output.matrix <- output.matrix/(nrow(X) - 1)
-            colnames(output.matrix) <- rownames(output.matrix) <- rownames(X)
-            return(output.matrix)
-        }
-        n.weights <- sum(weights)
-        means <- colSums(weights * X)/n.weights
-        X <- t(sqrt(weights) * (X - rep(means, each = nrow(X))))
-        if (correlation)
-            X <- X/sqrt(rowSums(X^2))
-        output.matrix <- tcrossprod(X)
-        if (!correlation)
-            output.matrix <- output.matrix/(n.weights - 1)
-        rownames(output.matrix) <- colnames(output.matrix) <- rownames(X)
-        return(output.matrix)
-    }
+        return(weightedCovarianceCorrelationMatrixCompleteCases(X, weights, correlation))
     # Remaining scenario has missing data spread throughout the data and needs
     # to be computed pairwise to correctly weight the data.
     num.cols <- ncol(X)
@@ -419,4 +397,40 @@ print.CorrelationMatrix <- function(x, ...) {
     print(correlation.matrix)
 }
 
-
+#' Use a faster algorithm to compute the covariance or correlation when no missing data is present.
+#' @param X A numeric matrix with no missing values to compute the covariance or correlation
+#' @param weight A numeric vector of weights to use
+#' @param correlation A logical indicator to compute correlation (\code{TRUE}) or covariance (\code{FALSE})
+#' @noRd
+weightedCovarianceCorrelationMatrixCompleteCases <- function(X, weights, correlation = TRUE)
+{
+    # Check if the weights are trivial and redundant
+    if (all(weights == weights[1]))
+    {
+        # Center the matrix
+        X <- t(X) - colMeans(X)
+        # Either scale to have variance 1 for correlation or divide only by df for covariance
+        if (correlation)
+            X <- X/sqrt(rowSums(X^2))
+        output.matrix <- tcrossprod(X)
+        if (!correlation)
+            output.matrix <- output.matrix/(nrow(X) - 1)
+        # Add the labels
+        colnames(output.matrix) <- rownames(output.matrix) <- rownames(X)
+        return(output.matrix)
+    }
+    # From here the weights are not trivial and need to be used in the computation
+    # Start by computing the weighted means and centering the matrix
+    n.weights <- sum(weights)
+    means <- colSums(weights * X)/n.weights
+    X <- t(sqrt(weights) * (X - rep(means, each = nrow(X))))
+    # Either scale or divide by df, equivalent to the above calculation without weights.
+    if (correlation)
+        X <- X/sqrt(rowSums(X^2))
+    output.matrix <- tcrossprod(X)
+    if (!correlation)
+        output.matrix <- output.matrix/(n.weights - 1)
+    # Add the labels
+    rownames(output.matrix) <- colnames(output.matrix) <- rownames(X)
+    output.matrix
+}
