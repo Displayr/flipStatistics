@@ -51,10 +51,11 @@ SumOfSquaresByGroup <- function(x, group, weights = NULL)
 #' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
 #' @param group A variable indicating group membership. Either a factor or coerced to a factor.
 #' @param weights The sampling or replication weights.
+#' @importFrom verbs Sum
 #' @export
 ResidualSumOfSquares <- function(x, group, weights = NULL)
 {
-    ss <- sum(SumOfSquaresByGroup(x, group, weights))
+    ss <- verbs::Sum(SumOfSquaresByGroup(x, group, weights), remove.missing = FALSE)
     if (is.na(ss))
         ss <- Inf
     ss
@@ -67,10 +68,11 @@ ResidualSumOfSquares <- function(x, group, weights = NULL)
 #'
 #' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
 #' @param weights The sampling or replication weights.
+#' @importFrom verbs Sum
 #' @export
 TotalSumOfSquares <- function(x, weights = NULL)
 {
-    sum(SumOfSquares(x, weights))
+    verbs::Sum(SumOfSquares(x, weights), remove.missing = FALSE)
 }
 
 
