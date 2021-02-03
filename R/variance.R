@@ -18,11 +18,11 @@ Variance <- function(x, weights = NULL, method = "SPSS")
         stop("Only SPSS supported in this function.")
     Ws <- matrix(weights, nrow(x), ncol(x))
     Ws[is.na(x)] <- NA
-    sum.W <- SumColumns(Ws)
+    sum.W <- SumColumns(Ws, remove.rows = NULL)
     # xw <- sweep(x, 1, weights, "*")
     xbar <- Mean(x, weights)
     xxw <- weights * x * x
-    sum.xxw <- SumColumns(xxw)
+    sum.xxw <- SumColumns(xxw, remove.rows = NULL)
     s2 <- (sum.xxw - sum.W * xbar * xbar) / (sum.W - 1)
     s2
 }

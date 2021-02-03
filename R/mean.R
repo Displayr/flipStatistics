@@ -14,8 +14,8 @@ Mean <- function(x, weights = NULL)
         return(apply(x, 2, FUN = mean, na.rm = TRUE))
     Ws <- matrix(weights, nrow(x), ncol(x))
     Ws[is.na(x)] <- NA
-    sum.W <- SumColumns(Ws)
-    SumColumns(x * weights) / sum.W
+    sum.W <- SumColumns(Ws, remove.rows = NULL)
+    SumColumns(x * weights, remove.rows = NULL) / sum.W
 }
 
 #' MeanByGroup
