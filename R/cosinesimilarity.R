@@ -11,7 +11,7 @@ CosineSimilarities <- function(x, weight = NULL)
 {
     if (is.null(weight))
         weight <- rep(1, nrow(x))
-    sum.x.squared <- SumColumns(x ^ 2 * weight, remove.missing = FALSE)
+    sum.x.squared <- SumColumns(x ^ 2 * weight, remove.rows = NULL, remove.missing = FALSE)
     n <- ncol(x)
     result <- matrix(NA, n, n)
     for (i in 1:n) {
