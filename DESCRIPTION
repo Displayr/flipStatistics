@@ -1,13 +1,14 @@
 Package: flipStatistics
 Type: Package
 Title: Computes standard statistics (e.g., mean, standard deviation.)
-Version: 1.0.4
+Version: 1.0.5
 Author: Displayr <opensource@displayr.com>
 Maintainer: Displayr <opensource@displayr.com>
 Description: Computes standard statistics, dealing with situations not addressed
     in base R. E.g., weighting, non-standard data structures.
 License: GPL-3
 LazyData: TRUE
+Depends: R (>= 3.5.0)
 Suggests:
     testthat,
     flipExampleData,
@@ -16,11 +17,13 @@ Imports:
     flipFormat,
     flipTransformations (>= 1.6.9),
     rhtmlHeatmap,
-    survey
+    survey,
+    verbs
 Remotes:
     Displayr/flipExampleData,
     Displayr/flipFormat,
     Displayr/flipTransformations,
-    Displayr/rhtmlHeatmap
+    Displayr/rhtmlHeatmap,
+    Displayr/verbs
 RoxygenNote: 7.1.1
 Encoding: UTF-8

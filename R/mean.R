@@ -4,6 +4,7 @@
 #'
 #' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
 #' @param weights The sampling or replication weights.
+#' @importFrom verbs SumColumns
 #' @export
 Mean <- function(x, weights = NULL)
 {
@@ -13,8 +14,8 @@ Mean <- function(x, weights = NULL)
         return(apply(x, 2, FUN = mean, na.rm = TRUE))
     Ws <- matrix(weights, nrow(x), ncol(x))
     Ws[is.na(x)] <- NA
-    sum.W <- colSums(Ws, na.rm = TRUE)
-    colSums(x * weights, na.rm = TRUE) / sum.W
+    sum.W <- SumColumns(Ws, remove.rows = NULL)
+    SumColumns(x * weights, remove.rows = NULL) / sum.W
 }
 
 #' MeanByGroup
