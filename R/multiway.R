@@ -7,7 +7,7 @@
 #' no columns have been specified.
 #' @param hide.empty.rows Hide rows containing no data.
 #' @param hide.empty.columns Hide columns containing no data.
-#' @param subset The sub-group to include in the analsis.
+#' @param subset The sub-group to include in the analysis.
 #' @param weights The sampling or replication weights.
 #' @importFrom flipTransformations AsNumeric ProcessQVariables
 #' @export
@@ -119,7 +119,7 @@ Multiway <- function(rows,
 #' @param data A \code{\link{data.frame}} of variables.
 #' @importFrom flipFormat Labels
 #' @importFrom flipTransformations Factor
-#' @param subset The sub-group to include in the analsis.
+#' @param subset The sub-group to include in the analysis.
 #' @export
 Interaction <- function(data, subset)
 {

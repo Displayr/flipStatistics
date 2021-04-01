@@ -9,7 +9,7 @@ Interaction(data, subset)
 \arguments{
 \item{data}{A \code{\link{data.frame}} of variables.}
 
-\item{subset}{The sub-group to include in the analsis.}
+\item{subset}{The sub-group to include in the analysis.}
 }
 \description{
 Interaction

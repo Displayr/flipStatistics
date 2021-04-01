@@ -29,7 +29,7 @@ no columns have been specified.}
 
 \item{hide.empty.columns}{Hide columns containing no data.}
 
-\item{subset}{The sub-group to include in the analsis.}
+\item{subset}{The sub-group to include in the analysis.}
 
 \item{weights}{The sampling or replication weights.}
 }
