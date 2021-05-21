@@ -65,6 +65,9 @@ test_that("Correlation and covariance matrices are calculated correctly",
     # Unweighted Covariance Matrix with Pairwise Obs
     expect_equal(cov(test.data.1, use = "pairwise.complete.obs")[3,4], 0.314795729067899)
 
+    expect_error(ScatterplotMatrix(test.data.2[test.complete.obs, 1:5],
+        weights = test.weight[test.complete.obs], fit.type = "LOESS",
+        correlation.decimals = 4), NA)
 
 })
 
