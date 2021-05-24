@@ -268,7 +268,9 @@ panel_scatter <- function(x, y, x.name, y.name, weights, modifications,
         sz.raw <- sqrt(values(c.hash) / sum(weights))
         sz.min <- min(sz.raw, na.rm = TRUE)
         sz.max <- max(sz.raw, na.rm = TRUE)
-        sz.scaled <- (sz.raw - sz.min)/(sz.max - sz.min) * sz.const
+        sz.denom <- sz.max - sz.min
+        sz.scaled <- if (sz.denom > 0) (sz.raw - sz.min)/sz.denom * sz.const
+                     else              rep(sz.const, length(sz.raw))
         point.marker$sizemode = "Area"
         point.marker$size <- pmax(1, sz.scaled)
     }
