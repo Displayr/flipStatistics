@@ -43,6 +43,7 @@ ScatterplotMatrix(
   panel.outline = TRUE,
   panel.line.width = 1,
   panel.line.color = "#BBBBBB",
+  panel.extend = 0.1,
   panel.gap = 0.01,
   margin.left = 20,
   margin.right = 20,
@@ -63,7 +64,7 @@ ScatterplotMatrix(
 
 \item{modifications}{One of "None", "Jitter", or "Enlarge points with multiple observations".}
 
-\item{fit.type}{Character; type of line of best fit to show in the scatterplot in the 
+\item{fit.type}{Character; type of line of best fit to show in the scatterplot in the
 lower triangle of the graphic. One of "None", "LOESS", or "Straight".}
 
 \item{fit.line.type}{Character; One of "solid", "dot", "dash, "dotdash", or length of dash "2px", "5px".}
@@ -130,7 +131,7 @@ determined based on the color of the points or histograms.}
 
 \item{tick.length}{Length of tick labels in pixels.}
 
-\item{tick.format}{Format of the ticklabels in D3 (e.g. ".1f"). Leave blank for plotly to 
+\item{tick.format}{Format of the ticklabels in D3 (e.g. ".1f"). Leave blank for plotly to
 automatically set format based on values.}
 
 \item{panel.outline}{Logical; whether of not to show outline around each of the panels.}
@@ -138,6 +139,8 @@ automatically set format based on values.}
 \item{panel.line.width}{Line width of panel.outllne in pixels.}
 
 \item{panel.line.color}{Color of panel lines.}
+
+\item{panel.extend}{The extent to which the range in each panel should extend past the range of the variable.}
 
 \item{panel.gap}{Space between the panels of the scatterplot matrix as a proportion of the total graphic.}
 

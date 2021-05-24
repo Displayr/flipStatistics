@@ -5,7 +5,7 @@
 #' @param weights A numeric vector with length equal to the number of rows in \code{x}.
 #' @param seed A seed used to generate random variables for jitter.
 #' @param modifications One of "None", "Jitter", or "Enlarge points with multiple observations".
-#' @param fit.type Character; type of line of best fit to show in the scatterplot in the 
+#' @param fit.type Character; type of line of best fit to show in the scatterplot in the
 #'   lower triangle of the graphic. One of "None", "LOESS", or "Straight".
 #' @param fit.line.type Character; One of "solid", "dot", "dash, "dotdash", or length of dash "2px", "5px".
 #' @param fit.line.width Numeric; Line width of line of best fit.
@@ -33,7 +33,7 @@
 #' @param tick.font.color Font color of the tick labels.
 #' @param tick.font.size Font size tick labels in pixels.
 #' @param tick.length Length of tick labels in pixels.
-#' @param tick.format Format of the ticklabels in D3 (e.g. ".1f"). Leave blank for plotly to 
+#' @param tick.format Format of the ticklabels in D3 (e.g. ".1f"). Leave blank for plotly to
 #'  automatically set format based on values.
 #' @param panel.outline Logical; whether of not to show outline around each of the panels.
 #' @param panel.line.width Line width of panel.outllne in pixels.
@@ -48,6 +48,7 @@
 #' a named color in character format (e.g. "black") or a hex code.
 #' @param charting.area.fill.opacity Charting area background opacity as an alpha value (0 to 1).
 #' @param panel.gap Space between the panels of the scatterplot matrix as a proportion of the total graphic.
+#' @param panel.extend The extent to which the range in each panel should extend past the range of the variable.
 #' @param margin.top Margin between charting area and the top of the graphic in pixels.
 #' @param margin.bottom Margin between charting area and the bottom of the graphic in pixels.
 #' @param margin.left Margin between charting area and the left of the graphic in pixels.
@@ -63,7 +64,7 @@
 #' @importFrom flipTransformations AsNumeric
 #' @export
 ScatterplotMatrix <- function(x, weights = 1:NROW(x), seed = 123,
-                              modifications = "Enlarge points with multiple observations", 
+                              modifications = "Enlarge points with multiple observations",
                               fit.type = "None",
                               fit.line.type = "solid",
                               fit.line.width = 2,
@@ -98,11 +99,12 @@ ScatterplotMatrix <- function(x, weights = 1:NROW(x), seed = 123,
                               panel.outline = TRUE,
                               panel.line.width = 1,
                               panel.line.color = "#BBBBBB",
+                              panel.extend = 0.1,
                               panel.gap = 0.01,
-                              margin.left = 20, 
+                              margin.left = 20,
                               margin.right = 20,
                               margin.top = 20,
-                              margin.bottom = 20, 
+                              margin.bottom = 20,
                               margin.autoexpand = TRUE,
                               modebar.show = FALSE,
                               tooltip.show = TRUE,
@@ -120,7 +122,7 @@ ScatterplotMatrix <- function(x, weights = 1:NROW(x), seed = 123,
         size = correlation.font.size)
     blank.axis <- list(range = c(0, 1), showgrid = FALSE, showticklabels = FALSE, mirror = TRUE,
         showline = panel.outline, linewidth = panel.line.width, linecolor = panel.line.color,
-        zeroline = FALSE, fixedrange = !zoom.enable) 
+        zeroline = FALSE, fixedrange = !zoom.enable)
     tick.font <- list(family = tick.font.family, color = tick.font.color, size = tick.font.size)
     hist.hover <- list(font = list(family = hovertext.font.family, size = hovertext.font.size,
         color = autoFontColor(histogram.color)), bgcolor = histogram.color)
@@ -140,27 +142,27 @@ ScatterplotMatrix <- function(x, weights = 1:NROW(x), seed = 123,
         for (j in 1:n)
         {
             if (i == j)
-                panels[[k]] <- panel_hist(x[,i], weights = weights, 
+                panels[[k]] <- panel_hist(x[,i], weights = weights,
                     label = labels[i], label.font = label.font,
                     color = histogram.color, opacity = histogram.opacity,
-                    hover.style = hist.hover, axis = blank.axis)
+                    hover.style = hist.hover, axis = blank.axis, panel.extend = panel.extend)
             else if (j > i)
-                panels[[k]] <- panel_cor(x[,j], x[,i], weights = weights, 
+                panels[[k]] <- panel_cor(x[,j], x[,i], weights = weights,
                     decimals = correlation.decimals, font = correlation.font, axis = blank.axis)
             else
                 panels[[k]] <- panel_scatter(x[,j], x[,i], x.name = labels[j], y.name = labels[i],
                     weights, modifications,
                     fit.type, fit.line.marker, fit.hover,
                     point.marker, point.hover,
-                    xaxis = list(range = range(x[,j], na.rm = TRUE, finite = TRUE) * c(0.9, 1.1),
+                    xaxis = list(range = range(x[,j], na.rm = TRUE, finite = TRUE) * c(1 - panel.extend, 1 + panel.extend),
                         showgrid = FALSE, tickfont = tick.font, tickformat = tick.format,
                         showline = panel.outline, mirror = TRUE, ticks = "outside", ticklen = tick.length,
-                        linewidth = panel.line.width, linecolor = panel.line.color,
+                        linewidth = panel.line.width, linecolor = panel.line.color, zeroline = FALSE,
                         showticklabels = i == n, tickcolor = panel.line.color, fixedrange = !zoom.enable),
-                    yaxis = list(range = range(x[,i], na.rm = TRUE, finite = TRUE) * c(0.9, 1.1),
+                    yaxis = list(range = range(x[,i], na.rm = TRUE, finite = TRUE) * c(1 - panel.extend, 1 + panel.extend),
                         showgrid = FALSE, tickfont = tick.font, tickformat = tick.format,
                         showline = panel.outline, mirror = TRUE, ticks = "outside", ticklen = tick.length,
-                        linewidth = panel.line.width, linecolor = panel.line.color,
+                        linewidth = panel.line.width, linecolor = panel.line.color, zeroline = FALSE,
                         showticklabels = j == 1, tickcolor = panel.line.color, fixedrange = !zoom.enable))
             k <- k + 1
         }
@@ -171,7 +173,7 @@ ScatterplotMatrix <- function(x, weights = 1:NROW(x), seed = 123,
         stop("'Panel gap' should be between 0 and 1/(2n) (",
              round(1/(2*n), 4), ")")
     res <- subplot(panels, nrows = n, margin = panel.gap,
-        heights = rep(1/n, n) - h.offset, 
+        heights = rep(1/n, n) - h.offset,
         widths  = rep(1/n, n) - w.offset)
 
     res <- config(res, displayModeBar = modebar.show)
@@ -202,7 +204,7 @@ panel_cor <- function(x, y, weights, decimals, font, axis)
 }
 
 
-panel_hist <- function(x, weights, label, label.font, color, opacity, hover.style, axis)
+panel_hist <- function(x, weights, label, label.font, color, opacity, hover.style, axis, panel.extend)
 {
     h <- weights::wtd.hist(x, plot = FALSE, weight = weights)
     breaks <- h$breaks
@@ -213,21 +215,21 @@ panel_hist <- function(x, weights, label, label.font, color, opacity, hover.styl
     hover.text = sprintf("P(%.2f < x < %.2f) = %.2f", breaks[-nB], breaks[-1], y)
     xaxis <- axis
     yaxis <- axis
-    xaxis$range <- range(x, na.rm = TRUE, finite = TRUE) * c(0.9, 1.1)
+    xaxis$range <- range(x, na.rm = TRUE, finite = TRUE) * c(1 - panel.extend, 1 + panel.extend)
     yaxis$range <- c(0, 1.5 * max(y))
 
     pp <- plot_ly()
     pp <- add_trace(pp, x = x0, y = y, type = "bar", showlegend = FALSE,
         marker = list(color = toRGB(color, alpha = opacity)),
         name = label, hoverinfo = "name+text", text = hover.text, hoverlabel = hover.style)
-    pp <- layout(pp, xaxis = xaxis, yaxis = yaxis, 
+    pp <- layout(pp, xaxis = xaxis, yaxis = yaxis,
         annotations = list(text = label, showarrow = FALSE, font = label.font,
         x = 0.5, y = 0.85, xref = "paper", yref = "paper", xanchor = "center", yanchor = "middle"))
     return(pp)
 }
 
 
-panel_scatter <- function(x, y, x.name, y.name, weights, modifications, 
+panel_scatter <- function(x, y, x.name, y.name, weights, modifications,
     fit.type, fit.line.marker, fit.hover.style,
     point.marker, point.hover.style, xaxis, yaxis)
 {
@@ -268,12 +270,12 @@ panel_scatter <- function(x, y, x.name, y.name, weights, modifications,
         sz.max <- max(sz.raw, na.rm = TRUE)
         sz.scaled <- (sz.raw - sz.min)/(sz.max - sz.min) * sz.const
         point.marker$sizemode = "Area"
-        point.marker$size <- sz.scaled
+        point.marker$size <- pmax(1, sz.scaled)
     }
     else
         stop(paste("Point setting not handled:", modifications))
 
-    pp <- plot_ly(x = x.pts, y = y.pts, type = "scatter", mode = "markers", 
+    pp <- plot_ly(x = x.pts, y = y.pts, type = "scatter", mode = "markers",
         marker = point.marker, hoverinfo = "x+y", hoverlabel = point.hover.style,
         hovertemplate = paste0(x.name, ": %{x}<br>", y.name, ": %{y}<extra></extra>"),
         cliponaxis = FALSE)
@@ -298,7 +300,7 @@ panel_scatter <- function(x, y, x.name, y.name, weights, modifications,
             suppressWarnings(fitted.y <- loess(yok ~ xok, weights = weights[ok])$fitted)
             pp <- add_trace(pp, x = xok[j], y = fitted.y[j], type = "scatter", mode = "markers+lines",
                 marker = list(color = fit.line.marker$color, opacity = 0),
-                line = fit.line.marker, name = "Fitted", 
+                line = fit.line.marker, name = "Fitted",
                 hovertemplate = paste0(x.name, ": %{x}<br>", y.name, ": %{y}"),
                 hoverinfo = "all", hoverlabel = fit.hover.style)
         }
