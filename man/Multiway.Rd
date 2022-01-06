@@ -8,7 +8,7 @@ Multiway(
   rows,
   columns = NULL,
   numeric = NULL,
-  numeric.statistic = "Mean",
+  numeric.statistic = c("Mean", "Minimum", "Maximum", "Sum"),
   hide.empty.rows = FALSE,
   hide.empty.columns = FALSE,
   subset = NULL,
@@ -22,8 +22,11 @@ Multiway(
 
 \item{numeric}{An optional numeric variable, which is used to compute the mean in the cells of the table.}
 
-\item{numeric.statistic}{One of \code{"Mean"}, \code{"Minimum"}, \code{"Maximum"}, \code{"Sum"}.The statistic to be computed when rows and columns have been specified. Ignored if
-no columns have been specified.}
+\item{numeric.statistic}{One of \code{"Mean"}, \code{"Minimum"}, \code{"Maximum"},
+\code{"Sum"}. The statistic to be computed when rows and columns have been
+specified. If \code{columns} is not supplied then can be a vector containing
+any of those four values (defaults to all four). Ignored if \code{numeric} is
+not supplied.}
 
 \item{hide.empty.rows}{Hide rows containing no data.}
 

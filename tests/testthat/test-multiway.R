@@ -24,7 +24,16 @@ test_that("Means",
               f <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,  hide.empty.rows = TRUE))
               expect_equal(sum(f$Count), cnt)
               expect_equal(sum(f[, 5]), av)
-              f1 <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,  hide.empty.rows = FALSE))
+
+              ## DS-3640: Allow user to specify subset of numeric.statistic when
+              ##   no column vars
+              f2 <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,
+                                              hide.empty.rows = TRUE,
+                                              numeric.statistic = c("Minimum", "Maximum")))
+              expect_equal(f[, -c(5, 8)], f2)
+
+              f1 <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,
+                                              hide.empty.rows = FALSE))
               expect_equal(sum(f1$Count), cnt)
               expect_equal(sum(f1[, 5], na.rm = TRUE), av)
 })

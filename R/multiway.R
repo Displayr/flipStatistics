@@ -3,8 +3,11 @@
 #' @param rows A \code{\link{data.frame}} of variables to show in the rows of the table.
 #' @param columns An optional \code{\link{data.frame}} of variables to show in the columns of the table.
 #' @param numeric An optional numeric variable, which is used to compute the mean in the cells of the table.
-#' @param numeric.statistic One of \code{"Mean"}, \code{"Minimum"}, \code{"Maximum"}, \code{"Sum"}.The statistic to be computed when rows and columns have been specified. Ignored if
-#' no columns have been specified.
+#' @param numeric.statistic One of \code{"Mean"}, \code{"Minimum"}, \code{"Maximum"},
+#' \code{"Sum"}. The statistic to be computed when rows and columns have been
+#' specified. If \code{columns} is not supplied then can be a vector containing
+#' any of those four values (defaults to all four). Ignored if \code{numeric} is
+#' not supplied.
 #' @param hide.empty.rows Hide rows containing no data.
 #' @param hide.empty.columns Hide columns containing no data.
 #' @param subset The sub-group to include in the analysis.
@@ -14,7 +17,7 @@
 Multiway <- function(rows,
                      columns = NULL,
                      numeric = NULL,
-                     numeric.statistic = "Mean",
+                     numeric.statistic = c("Mean", "Minimum", "Maximum", "Sum"),
                      hide.empty.rows = FALSE,
                      hide.empty.columns = FALSE,
                      subset = NULL,
@@ -66,14 +69,22 @@ Multiway <- function(rows,
             min <- StatisticsByGroup(numeric, values, weights, FUN = Min)
             max <- StatisticsByGroup(numeric, values, weights, FUN = Max)
             sum <- mean * as.matrix(counts)
-            m <- matrix(NA, nrow(result), ncol = 4)
-            colnames(m) <- paste0(label, "\n", c("Mean", "Minimum", "Maximum", "Sum"))
-            m[non.empty.rows, ] <- cbind(mean, min, max, sum)
+            allowed.stats <- c("Mean", "Minimum", "Maximum", "Sum")
+            if (!all(numeric.statistic %in% allowed.stats))
+            {
+                stat.list <- paste(allowed.stats, collapse = ", ")
+                stop(sQuote("allowed.stats"), " must be one or more of: ", stat.list, ".")
+            }
+            m <- matrix(NA, nrow(result), ncol = length(numeric.statistic))
+            colnames(m) <- paste0(label, "\n", numeric.statistic)
+            m[non.empty.rows, ] <- cbind(mean, min, max, sum)[, match(numeric.statistic,
+                                                                      allowed.stats)]
             result <- cbind(result, m)
         }
     }
     else # Crosstabs
     {
+        numeric.statistic <- match.arg(numeric.statistic)
         n.rows <- nrow(result)
         n.columns <- nrow(columns$labels)
         n.p <- n.rows * n.columns
