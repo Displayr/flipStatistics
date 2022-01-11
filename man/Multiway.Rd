@@ -8,7 +8,8 @@ Multiway(
   rows,
   columns = NULL,
   numeric = NULL,
-  numeric.statistic = c("Mean", "Minimum", "Maximum", "Sum"),
+  numeric.statistics = NULL,
+  numeric.statistic = "Mean",
   hide.empty.rows = FALSE,
   hide.empty.columns = FALSE,
   subset = NULL,
@@ -16,17 +17,31 @@ Multiway(
 )
 }
 \arguments{
-\item{rows}{A \code{\link{data.frame}} of variables to show in the rows of the table.}
+\item{rows}{A \code{\link{data.frame}} of variables to show in the
+rows of the table.}
 
-\item{columns}{An optional \code{\link{data.frame}} of variables to show in the columns of the table.}
+\item{columns}{An optional \code{\link{data.frame}} of variables to
+show in the columns of the table.}
 
-\item{numeric}{An optional numeric variable, which is used to compute the mean in the cells of the table.}
+\item{numeric}{An optional numeric variable, which is used to
+compute the mean in the cells of the table.}
 
-\item{numeric.statistic}{One of \code{"Mean"}, \code{"Minimum"}, \code{"Maximum"},
-\code{"Sum"}. The statistic to be computed when rows and columns have been
-specified. If \code{columns} is not supplied then can be a vector containing
-any of those four values (defaults to all four). Ignored if \code{numeric} is
-not supplied.}
+\item{numeric.statistics}{One or more of \code{"Mean"}, \code{"Minimum"},
+\code{"Maximum"}, \code{"Sum"}. The statistic to be computed
+when rows and columns have been specified. If \code{columns} is
+not supplied then can be a vector containing any of those four
+values. Ignored if \code{numeric} is not
+supplied.}
+
+\item{numeric.statistic}{Deprecated in favour of
+\code{numeric.statistics}, provided for backwards
+compatibility. Ignored if \code{numeric} is not supplied or
+\code{numeric.statistics} is non-\code{NULL}.One of
+\code{"Mean"}, \code{"Minimum"}, \code{"Maximum"},
+\code{"Sum"}. The statistic to be computed when rows and
+columns have been specified. If \code{columns} is not supplied
+then can be a vector containing any of those four values
+(defaults to all four).}
 
 \item{hide.empty.rows}{Hide rows containing no data.}
 
@@ -37,5 +52,6 @@ not supplied.}
 \item{weights}{The sampling or replication weights.}
 }
 \description{
-Creates a crosstab by aggregating numeric data over factors.
+Creates a crosstab by aggregating numeric data over
+    factors.
 }

@@ -1,7 +1,5 @@
 context("multiway")
 
-
-
 data(colas, package = "flipExampleData")
 attach(colas)
 test_that("Frequency",
@@ -29,7 +27,7 @@ test_that("Means",
               ##   no column vars
               f2 <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,
                                               hide.empty.rows = TRUE,
-                                              numeric.statistic = c("Minimum", "Maximum")))
+                                              numeric.statistics = c("Minimum", "Maximum")))
               expect_equal(f[, -c(5, 8)], f2)
 
               f1 <- suppressWarnings(Multiway(data.frame(d1, d2, d3), numeric = d4,
