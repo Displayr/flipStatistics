@@ -47,7 +47,7 @@ Multiway <- function(rows,
         if (has.columns)
             numeric.statistics <- numeric.statistic
         else
-            numeric.statistics <- c("Mean", "Minimum", "Maximum", "Sum")
+            numeric.statistics <- c("Count", "Mean", "Minimum", "Maximum", "Sum")
     }
     if (!is.data.frame(rows))
         rows <- data.frame(rows, stringsAsFactors = TRUE)
@@ -84,6 +84,7 @@ Multiway <- function(rows,
     # 1D
     if (!has.columns)
     {
+        n.row.vars <- ncol(result)
         result$Count <- 0
         if (!is.null(weights))
             names(result)[ncol(result)] <- "Weighted count"
@@ -95,17 +96,18 @@ Multiway <- function(rows,
             min <- StatisticsByGroup(numeric, values, weights, FUN = Min)
             max <- StatisticsByGroup(numeric, values, weights, FUN = Max)
             sum <- mean * as.matrix(counts)
-            allowed.stats <- c("Mean", "Minimum", "Maximum", "Sum")
+            allowed.stats <- c("Count", "Mean", "Minimum", "Maximum", "Sum")
             if (!all(numeric.statistics %in% allowed.stats))
             {
                 stat.list <- paste(allowed.stats, collapse = ", ")
                 stop(sQuote("allowed.stats"), " must be one or more of: ", stat.list, ".")
             }
-            m <- matrix(NA, nrow(result), ncol = length(numeric.statistics))
-            colnames(m) <- paste0(label, "\n", numeric.statistics)
-            m[non.empty.rows, ] <- cbind(mean, min, max, sum)[, match(numeric.statistics,
-                                                                      allowed.stats)]
-            result <- cbind(result, m)
+            m <- matrix(NA, nrow(result), ncol = length(allowed.stats) - 1)
+            colnames(m) <- paste0(label, "\n", allowed.stats[-1])
+            m[non.empty.rows, ] <- cbind(mean, min, max, sum)
+            keep.idx <- c(seq_len(n.row.vars),
+                          match(numeric.statistics, allowed.stats) + n.row.vars)
+            result <- cbind(result, m)[, keep.idx]
         }
     }
     else # Crosstabs
