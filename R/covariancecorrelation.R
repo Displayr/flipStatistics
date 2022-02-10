@@ -52,7 +52,7 @@ weightedPartialCovarianceMatrix <- function(X, weights, correlation = FALSE)
 #' my.weight <- c(1.2, 0.8, 0.8, 1.2)
 #' CovarianceAndCorrelationMatrix(my.data, weights = my.weight, pairwise = TRUE)
 #' @importFrom stats cor cov
-#' @importFrom verbs SumRows
+#' @importFrom verbs SumEachRow
 #' @export
 CovarianceAndCorrelationMatrix <- function(data,
     weights = NULL,
@@ -69,7 +69,7 @@ CovarianceAndCorrelationMatrix <- function(data,
     {
         if (!pairwise)
         {
-            complete.obs <- !is.na(SumRows(data, remove.columns = NULL, remove.missing = FALSE)) & weights > 0
+            complete.obs <- !is.na(SumEachRow(data, remove.columns = NULL, remove.missing = FALSE)) & weights > 0
             data <- data[complete.obs, ]
             weights <- weights[complete.obs]
         }
@@ -402,7 +402,7 @@ print.CorrelationMatrix <- function(x, ...) {
 #' @param X A numeric matrix with no missing values to compute the covariance or correlation
 #' @param weight A numeric vector of weights to use
 #' @param correlation A logical indicator to compute correlation (\code{TRUE}) or covariance (\code{FALSE})
-#' @importFrom verbs SumRows SumColumns
+#' @importFrom verbs SumEachRow SumEachColumn
 #' @noRd
 weightedCovarianceCorrelationMatrixCompleteCases <- function(X, weights, correlation = TRUE)
 {
@@ -413,7 +413,7 @@ weightedCovarianceCorrelationMatrixCompleteCases <- function(X, weights, correla
         X <- t(X) - colMeans(X)
         # Either scale to have variance 1 for correlation or divide only by df for covariance
         if (correlation)
-            X <- X/sqrt(SumRows(X^2, remove.columns = NULL, remove.missing = FALSE))
+            X <- X/sqrt(SumEachRow(X^2, remove.columns = NULL, remove.missing = FALSE))
         output.matrix <- tcrossprod(X)
         if (!correlation)
             output.matrix <- output.matrix/(nrow(X) - 1)
@@ -424,11 +424,11 @@ weightedCovarianceCorrelationMatrixCompleteCases <- function(X, weights, correla
     # From here the weights are not trivial and need to be used in the computation
     # Start by computing the weighted means and centering the matrix
     n.weights <- sum(weights)
-    means <- SumColumns(weights * X, remove.rows = NULL, remove.missing = FALSE)/n.weights
+    means <- SumEachColumn(weights * X, remove.rows = NULL, remove.missing = FALSE)/n.weights
     X <- t(sqrt(weights) * (X - rep(means, each = nrow(X))))
     # Either scale or divide by df, equivalent to the above calculation without weights.
     if (correlation)
-        X <- X/sqrt(SumRows(X^2, remove.columns = NULL, remove.missing = FALSE))
+        X <- X/sqrt(SumEachRow(X^2, remove.columns = NULL, remove.missing = FALSE))
     output.matrix <- tcrossprod(X)
     if (!correlation)
         output.matrix <- output.matrix/(n.weights - 1)
