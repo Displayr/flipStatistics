@@ -5,13 +5,13 @@
 #'
 #' @param x A \code{matrix} whose columns we use to calculate the cosine similarity.
 #' @param weight A \code{vector} of weights.
-#' @importFrom verbs Sum SumColumns
+#' @importFrom verbs Sum SumEachColumn
 #' @export
 CosineSimilarities <- function(x, weight = NULL)
 {
     if (is.null(weight))
         weight <- rep(1, nrow(x))
-    sum.x.squared <- SumColumns(x ^ 2 * weight, remove.rows = NULL, remove.missing = FALSE)
+    sum.x.squared <- SumEachColumn(x ^ 2 * weight, remove.rows = NULL, remove.missing = FALSE)
     n <- ncol(x)
     result <- matrix(NA, n, n)
     for (i in 1:n) {
