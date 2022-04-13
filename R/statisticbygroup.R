@@ -20,7 +20,7 @@ StatisticsByGroup <- function(x, group, weights = NULL, FUN = Mean)
     for (i in 1:n.levels)
     {
         lev <- levs[i] == group
-        result[i, ] <- FUN(x[lev, ], if (is.null(weights)) NULL else weights[lev])
+        result[i, ] <- FUN(x[lev, , drop = FALSE], if (is.null(weights)) NULL else weights[lev])
     }
     result
 }
