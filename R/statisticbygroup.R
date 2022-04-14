@@ -5,6 +5,10 @@
 #' @param weights The sampling or replication weights.
 #' @param FUN A function that can handle a weight argument.
 #' @export
+#' @examples
+#' ## Two variables with a single observation and a single group
+#' dat <- matrix(c(1.0, 2.0), 1, 2)
+#' stopifnot(identical(unname(StatisticsByGroup(dat, 1)), dat))
 StatisticsByGroup <- function(x, group, weights = NULL, FUN = Mean)
 {
     if (!is.matrix(x) & !is.data.frame(x))

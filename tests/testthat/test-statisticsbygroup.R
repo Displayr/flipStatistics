@@ -22,4 +22,21 @@ test_that("sum of squares by group",
           })
 
 
+test_that("StatisticByGroup with a group with a single observation",
+{
+    ## See also @examples for StatisticsByGroup
+    ## three observations/pairs of two identical variables
+    dat <- matrix(0:2, 3, 2)
 
+    groups <- c(1, 2, 3)
+    expected.out <- dat
+    expect_equal(unname(StatisticsByGroup(dat, groups)), expected.out)
+
+    groups <- c(1, 1, 2)
+    expected.out <- matrix(c(.5, 2), 2, 2)  # aggregate(dat, list(groups), Mean)
+    expect_equal(unname(StatisticsByGroup(dat, groups)), expected.out)
+
+    expected.out <- matrix(c(1.0, 2.0), 2, 2, dimnames = list(1:2, NULL))
+    colSumsW <- function(x, weights = NULL) colSums(x)
+    expect_equal(StatisticsByGroup(dat, groups, FUN = colSumsW), expected.out)
+})
