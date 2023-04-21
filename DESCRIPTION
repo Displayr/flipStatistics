@@ -20,6 +20,7 @@ Imports:
     survey,
     verbs
 Remotes:
+    CRAN/survey@4.0,
     Displayr/flipExampleData,
     Displayr/flipFormat,
     Displayr/flipTransformations,
