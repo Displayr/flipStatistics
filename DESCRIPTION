@@ -20,11 +20,11 @@ Imports:
     survey,
     verbs
 Remotes:
-    CRAN/survey@4.0,
     Displayr/flipExampleData,
     Displayr/flipFormat,
     Displayr/flipTransformations,
     Displayr/rhtmlHeatmap,
-    Displayr/verbs
+    Displayr/verbs,
+    svn::svn://r-forge.r-project.org/svnroot/r-survey/pkg/survey
 RoxygenNote: 7.1.2
 Encoding: UTF-8
