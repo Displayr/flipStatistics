@@ -24,7 +24,6 @@ Remotes:
     Displayr/flipFormat,
     Displayr/flipTransformations,
     Displayr/rhtmlHeatmap,
-    Displayr/verbs,
-    svn::svn://r-forge.r-project.org/svnroot/r-survey/pkg/survey
+    Displayr/verbs
 RoxygenNote: 7.1.2
 Encoding: UTF-8
