@@ -89,6 +89,7 @@ WeightedTable <- function (...,
     }
 
     names(dn) <- dnn
+    weights <- weights[!is.na(bin)]
     bin <- bin[!is.na(bin)]
     if (length(bin))
         bin <- bin + 1L
