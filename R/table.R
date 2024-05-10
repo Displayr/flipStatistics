@@ -15,9 +15,7 @@ Table <- function(formula, data, FUN = sum)
             stop("'FUN' can only be provided with a dependent variable.")
         return(xtabs(formula, data = data))
     }
-    data = aggregate(formula, data, FUN = FUN, drop = FALSE)
-    xtabs(formula, data = data, addNA = is.na(FUN(numeric(0))))
+    data <- aggregate(formula, data, FUN = FUN, drop = FALSE)
+    remove.missing <- !is.na(FUN(numeric(0)))
+    xtabs(formula, data = data, na.rm = remove.missing)
 }
-
-
-
