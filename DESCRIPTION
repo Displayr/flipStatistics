@@ -1,7 +1,7 @@
 Package: flipStatistics
 Type: Package
 Title: Computes standard statistics (e.g., mean, standard deviation.)
-Version: 1.2.4
+Version: 1.2.5
 Author: Displayr <opensource@displayr.com>
 Maintainer: Displayr <opensource@displayr.com>
 Description: Computes standard statistics, dealing with situations not addressed
@@ -16,6 +16,7 @@ Suggests:
 Imports:
     flipFormat,
     flipTransformations (>= 1.6.9),
+    flipU (>= 1.6.2),
     rhtmlHeatmap,
     survey,
     verbs
@@ -23,7 +24,8 @@ Remotes:
     Displayr/flipExampleData,
     Displayr/flipFormat,
     Displayr/flipTransformations,
+    Displayr/flipU,
     Displayr/rhtmlHeatmap,
     Displayr/verbs
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8

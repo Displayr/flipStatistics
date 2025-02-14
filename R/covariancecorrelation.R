@@ -266,6 +266,7 @@ CorrelationMatrix <- function(input.data, use.names = FALSE, ignore.columns = ""
 
 # Default method for CorrelationMatrix.
 #' @importFrom flipTransformations AsDataFrame AsNumeric
+#' @importFrom flipU StopForUserError
 #' @export
 CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.columns = "",
                                       missing.data = "Use partial data", spearman = FALSE,
@@ -277,20 +278,20 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
     dat <- AsDataFrame(input.data, use.names, ignore.columns, categorical.as.binary)
 
     if (ncol(dat) < 2)
-        stop("Two or more columns of data are required to compute a ",
-             "correlation matrix.")
+        StopForUserError("Two or more columns of data are required to compute a ",
+                         "correlation matrix.")
 
     wgt <- if (is.null(weights)) {
         rep(1, nrow(dat))
     } else
         weights
     if (length(wgt) != nrow(dat))
-        stop("Input data and weights must be same length.")
+        StopForUserError("Input data and weights must be same length.")
 
     if (is.null(filter) || (length(filter) == 1 && filter == TRUE))
         filter <- rep(TRUE, nrow(dat))
     if (length(filter) != nrow(dat))
-        stop("Input data and filter must be same length.")
+        StopForUserError("Input data and filter must be same length.")
 
     dat <- dat[filter, ]
     wgt <- wgt[filter]
@@ -302,10 +303,10 @@ CorrelationMatrix.default <- function(input.data, use.names = FALSE, ignore.colu
         } else if (missing.data == "Use partial data") {
             removeCasesWithAllNA(dat)
         } else
-            stop("Missing data option not handled: ", missing.data)
+            StopForUserError("Missing data option not handled: ", missing.data)
 
     if (nrow(processed.data) == 0)
-        stop("No data remains after applying any filter and treatment of missing data.")
+        StopForUserError("No data remains after applying any filter and treatment of missing data.")
 
     wgt <- wgt[row.names(dat) %in% rownames(processed.data)]
 
@@ -341,9 +342,10 @@ errorIfMissingDataFound <- function(data)
     data
 }
 
+#' @importFrom flipU StopForUserError
 missingDataFail <- function()
 {
-    stop("The data contains missing values. Change the 'missing' option to run the analysis.")
+    StopForUserError("The data contains missing values. Change the 'missing' option to run the analysis.")
 }
 
 

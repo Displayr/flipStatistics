@@ -9,6 +9,7 @@
 #' @param useNA whether to include \code{NA} values in the table
 #' @param dnn the names to given to the dimensions in the result
 #' @param deparse.level controls how the default \code{dnn} is constructed.
+#' @importFrom flipU StopForUserError
 #' @export
 
 WeightedTable <- function (...,
@@ -39,7 +40,7 @@ WeightedTable <- function (...,
     useNA <- match.arg(useNA)
     args <- list(...)
     if (!length(args))
-        stop("nothing to tabulate")
+        StopForUserError("nothing to tabulate")
     if (length(args) == 1L && is.list(args[[1L]])) {
         args <- args[[1L]]
         if (length(dnn) != length(args))
@@ -56,7 +57,7 @@ WeightedTable <- function (...,
         if (is.null(lens))
             lens <- length(a)
         else if (length(a) != lens)
-            stop("all arguments must have the same length")
+            StopForUserError("all arguments must have the same length")
         cat <- if (is.factor(a)) {
             if (any(is.na(levels(a))))
                 a
@@ -82,7 +83,7 @@ WeightedTable <- function (...,
         nl <- length(ll <- levels(cat))
         dims <- c(dims, nl)
         if (prod(dims) > .Machine$integer.max)
-            stop("attempt to make a table with >= 2^31 elements")
+            StopForUserError("attempt to make a table with >= 2^31 elements")
         dn <- c(dn, list(ll))
         bin <- bin + pd * (as.integer(cat) - 1L)
         pd <- pd * nl

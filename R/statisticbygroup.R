@@ -4,6 +4,7 @@
 #' @param group A variable indicating group membership. Either a factor or coerced to a factor.
 #' @param weights The sampling or replication weights.
 #' @param FUN A function that can handle a weight argument.
+#' @importFrom flipU StopForUserError
 #' @export
 #' @examples
 #' ## Two variables with a single observation and a single group
@@ -16,7 +17,7 @@ StatisticsByGroup <- function(x, group, weights = NULL, FUN = Mean)
     if (!is.factor(group))
         group <- factor(group)
     if (nrow(x) != length(group))
-        stop("The number of rows in 'x' and 'group' length are not equivalent.")
+        StopForUserError("The number of rows in 'x' and 'group' length are not equivalent.")
     n.levels <- nlevels(group)
     levs <- levels(group)
     k <- ncol(x)
