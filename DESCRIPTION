@@ -24,7 +24,6 @@ Remotes:
     Displayr/flipFormat,
     Displayr/flipTransformations,
     Displayr/rhtmlHeatmap,
-    Displayr/survey,
     Displayr/verbs
 RoxygenNote: 7.3.1
 Encoding: UTF-8
