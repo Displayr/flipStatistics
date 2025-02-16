@@ -19,7 +19,7 @@ SumOfSquares <- function(x, weights = NULL)
         return(ss)
     }
     if (nrow(x) != length(weights))
-        StopForUserError("The number of rows in 'x' does not match the length 'weights and ")
+        StopForUserError("The number of rows in 'x' does not match the length 'weights'.")
     Ws <- matrix(weights, nrow(x), ncol(x))
     Ws[is.na(x)] <- NA
     sum.W <- apply(Ws, 2, sum, na.rm = TRUE)
