@@ -4,6 +4,7 @@
 #'
 #' @param x A \code{\link{data.frame}} or  \code{\link{matrix}}.
 #' @param weights The sampling or replication weights.
+#' @importFrom flipU StopForUserError
 #' @export
 SumOfSquares <- function(x, weights = NULL)
 {
@@ -18,7 +19,7 @@ SumOfSquares <- function(x, weights = NULL)
         return(ss)
     }
     if (nrow(x) != length(weights))
-        stop("The number of rows in 'x' does not match the length 'weights and ")
+        StopForUserError("The number of rows in 'x' does not match the length 'weights'.")
     Ws <- matrix(weights, nrow(x), ncol(x))
     Ws[is.na(x)] <- NA
     sum.W <- apply(Ws, 2, sum, na.rm = TRUE)

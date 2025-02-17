@@ -5,6 +5,7 @@
 #' @param FUN the function to be applied: see \code{apply} for details.
 #'
 #' @importFrom stats terms xtabs aggregate
+#' @importFrom flipU StopForUserError
 #' @export
 Table <- function(formula, data, FUN = sum)
 {
@@ -12,7 +13,7 @@ Table <- function(formula, data, FUN = sum)
     if (!has.outcome)
     {
         if (!missing(FUN))
-            stop("'FUN' can only be provided with a dependent variable.")
+            StopForUserError("'FUN' can only be provided with a dependent variable.")
         return(xtabs(formula, data = data))
     }
     data <- aggregate(formula, data, FUN = FUN, drop = FALSE)

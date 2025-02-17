@@ -27,6 +27,7 @@
 #' @param subset The sub-group to include in the analysis.
 #' @param weights The sampling or replication weights.
 #' @importFrom flipTransformations AsNumeric ProcessQVariables
+#' @importFrom flipU StopForUserError
 #' @export
 Multiway <- function(rows,
                      columns = NULL,
@@ -100,7 +101,7 @@ Multiway <- function(rows,
             if (!all(numeric.statistics %in% allowed.stats))
             {
                 stat.list <- paste(allowed.stats, collapse = ", ")
-                stop(sQuote("allowed.stats"), " must be one or more of: ", stat.list, ".")
+                StopForUserError(sQuote("allowed.stats"), " must be one or more of: ", stat.list, ".")
             }
             m <- matrix(NA, nrow(result), ncol = length(allowed.stats) - 1)
             colnames(m) <- paste0(label, "\n", allowed.stats[-1])
@@ -117,7 +118,7 @@ Multiway <- function(rows,
         n.columns <- nrow(columns$labels)
         n.p <- n.rows * n.columns
         if (n.p > 1e7)
-            stop("The size of the multiway table is too large because there are too many different variables wth too many different levels. This may be fixed by removing numeric variables with a wide range of values.")
+            StopForUserError("The size of the multiway table is too large because there are too many different variables wth too many different levels. This may be fixed by removing numeric variables with a wide range of values.")
         m <- matrix(if(has.numeric) NA else 0, n.rows, n.columns)
         column.labels <- apply(columns$labels, 1, paste, collapse = "\n")
         if (has.numeric)
