@@ -7,3 +7,4 @@ WeightedCounts = function(x, weights)
    Table(weights ~ x, data.frame(x = x, weights = weights), FUN = sum)
 }
 # Test comment
+# Test comment 2
