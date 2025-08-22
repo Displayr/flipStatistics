@@ -27,4 +27,4 @@ CosineSimilarities <- function(x, weight = NULL)
     colnames(result) <- colnames(x)
     rownames(result) <- colnames(x)
     result
-}
+} 
