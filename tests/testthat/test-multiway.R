@@ -47,8 +47,10 @@ test_that("Crosstab",
               sb <- runif(327) > .5
               f <- Multiway(data.frame(d1, q8), data.frame(d4, q7), hide.empty.rows = TRUE, weights = wgt, subset = sb)
               expect_equal(sum(f[,-1:-2]), sum(xtabs(wgt~d1 + q8 + d4 + q7, subset = sb)))
-              expect_error(Multiway(data.frame(d1), columns = data.frame(d2, d4, q1a, q1b, q2a, q2b, q2c)),
-                           "The variables in Rows and Columns have [0-9,]+ combinations of categories, more than the 10,000,000")
+              err <- expect_error(Multiway(data.frame(d1), columns = data.frame(d2, d4, q1a, q1b, q2a, q2b, q2c)),
+                                  "The variables in Rows and Columns have [0-9,]+ combinations of categories, more than the 10,000,000")
+              n.combinations <- sub(".* have ([0-9,]+) combinations.*", "\\1", conditionMessage(err))
+              expect_gt(as.numeric(gsub(",", "", n.combinations)), 1e7)
           })
 
 test_that("Rows with more combinations of categories than a matrix can hold give a clear error",

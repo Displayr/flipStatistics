@@ -62,13 +62,13 @@ Multiway <- function(rows,
     if (is.null(subset) || !is.null(subset) && length(subset) == 1)
         subset <- rep(TRUE, n)
     rows <- asFactors(rows)
-    n.combinations <- prod(sapply(rows, nlevels))
+    n.combinations <- productOfNLevels(rows)
     if (has.columns)
     {
         if (!is.data.frame(columns))
             columns <- data.frame(columns, stringsAsFactors = TRUE)
         columns <- asFactors(columns)
-        n.combinations <- n.combinations * prod(sapply(columns, nlevels))
+        n.combinations <- n.combinations * productOfNLevels(columns)
         max.combinations <- 1e7
         variable.locations <- "Rows and Columns"
         remove.from <- "Rows or Columns"
@@ -188,7 +188,7 @@ Interaction <- function(data, subset)
     n <- length(data[[1]])
     data <- asFactors(data)
     # Computing values
-    labels <- matrix("", prod(sapply(data, nlevels)), n.variables)
+    labels <- matrix("", productOfNLevels(data), n.variables)
     prod.n.levels <- 1
     values <- rep(1, n)
     for (i in 1:n.variables)
@@ -208,8 +208,12 @@ Interaction <- function(data, subset)
 
 asFactors <- function(data)
 {
-    for (i in seq_len(ncol(data)))
-        if (!is.factor(data[[i]]))
-            data[[i]] <- Factor(data[[i]])
+    not.factors <- !vapply(data, is.factor, logical(1L))
+    data[not.factors] <- lapply(data[not.factors], Factor)
     data
+}
+
+productOfNLevels <- function(data)
+{
+    prod(vapply(data, nlevels, integer(1L)))
 }
