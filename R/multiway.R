@@ -85,8 +85,7 @@ Multiway <- function(rows,
                          " combinations of categories, more than the ",
                          format(max.combinations, big.mark = ",", scientific = FALSE),
                          " a multiway table can show, so the table could not be created. ",
-                         "Please remove variables with many different values, such as numeric variables, from ",
-                         remove.from, ".")
+                         "Please remove variables with many different values from ", remove.from, ".")
     # Data preparation
     variable <- Interaction(rows, subset)
     values <- variable$values
