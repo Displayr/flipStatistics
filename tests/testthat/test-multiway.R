@@ -47,7 +47,24 @@ test_that("Crosstab",
               sb <- runif(327) > .5
               f <- Multiway(data.frame(d1, q8), data.frame(d4, q7), hide.empty.rows = TRUE, weights = wgt, subset = sb)
               expect_equal(sum(f[,-1:-2]), sum(xtabs(wgt~d1 + q8 + d4 + q7, subset = sb)))
-              expect_error(Multiway(data.frame(d1), columns = data.frame(d2, d4, q1a, q1b, q2a, q2b, q2c)), "The size of the multiway.")
+              expect_error(Multiway(data.frame(d1), columns = data.frame(d2, d4, q1a, q1b, q2a, q2b, q2c)),
+                           "The variables in Rows and Columns have [0-9,]+ combinations of categories, more than the 10,000,000")
+          })
+
+test_that("Rows with more combinations of categories than a matrix can hold give a clear error",
+          {
+              rows <- data.frame(a = 1:1300, b = 1:1300, c = 1:1300)
+              expect_error(Multiway(rows, NULL, NULL, numeric.statistics = "Mean", hide.empty.rows = TRUE,
+                                    hide.empty.columns = TRUE, subset = TRUE, weights = NULL),
+                           "The variables in Rows have 2,197,000,000 combinations of categories, more than the 2,147,483,647")
+          })
+
+test_that("Crosstabs with more combinations of categories than the cell limit give a clear error",
+          {
+              columns <- data.frame(b = 1:300, c = 1:300)
+              expect_error(Multiway(data.frame(a = 1:300), columns, NULL, numeric.statistics = "Mean",
+                                    hide.empty.rows = TRUE, hide.empty.columns = TRUE, subset = TRUE, weights = NULL),
+                           "The variables in Rows and Columns have 27,000,000 combinations of categories, more than the 10,000,000")
           })
 
 test_that("Table of means",

@@ -61,14 +61,38 @@ Multiway <- function(rows,
     # Cleaning subset.
     if (is.null(subset) || !is.null(subset) && length(subset) == 1)
         subset <- rep(TRUE, n)
+    rows <- asFactors(rows)
+    n.combinations <- prod(sapply(rows, nlevels))
+    if (has.columns)
+    {
+        if (!is.data.frame(columns))
+            columns <- data.frame(columns, stringsAsFactors = TRUE)
+        columns <- asFactors(columns)
+        n.combinations <- n.combinations * prod(sapply(columns, nlevels))
+        max.combinations <- 1e7
+        variable.locations <- "Rows and Columns"
+        remove.from <- "Rows or Columns"
+    }
+    else
+    {
+        # Without columns, the only limit is the most rows a matrix can hold
+        max.combinations <- .Machine$integer.max
+        variable.locations <- remove.from <- "Rows"
+    }
+    if (n.combinations > max.combinations)
+        StopForUserError("The variables in ", variable.locations, " have ",
+                         format(n.combinations, big.mark = ",", scientific = FALSE),
+                         " combinations of categories, more than the ",
+                         format(max.combinations, big.mark = ",", scientific = FALSE),
+                         " a multiway table can show, so the table could not be created. ",
+                         "Please remove variables with many different values, such as numeric variables, from ",
+                         remove.from, ".")
     # Data preparation
     variable <- Interaction(rows, subset)
     values <- variable$values
     result <- variable$labels
     if (has.columns)
     {
-        if (!is.data.frame(columns))
-            columns <- data.frame(columns, stringsAsFactors = TRUE)
         columns <- Interaction(columns, subset)
         n.rows <- nrow(result)
         values <- values + (columns$values - 1) * n.rows
@@ -117,8 +141,6 @@ Multiway <- function(rows,
         n.rows <- nrow(result)
         n.columns <- nrow(columns$labels)
         n.p <- n.rows * n.columns
-        if (n.p > 1e7)
-            StopForUserError("The size of the multiway table is too large because there are too many different variables wth too many different levels. This may be fixed by removing numeric variables with a wide range of values.")
         m <- matrix(if(has.numeric) NA else 0, n.rows, n.columns)
         column.labels <- apply(columns$labels, 1, paste, collapse = "\n")
         if (has.numeric)
@@ -165,9 +187,7 @@ Interaction <- function(data, subset)
 {
     n.variables <- ncol(data)
     n <- length(data[[1]])
-    for (i in 1:n.variables)
-        if (!is.factor(data[[i]]))
-             data[[i]] <- Factor(data[[i]])
+    data <- asFactors(data)
     # Computing values
     labels <- matrix("", prod(sapply(data, nlevels)), n.variables)
     prod.n.levels <- 1
@@ -185,4 +205,12 @@ Interaction <- function(data, subset)
     labels <- data.frame(labels, stringsAsFactors = TRUE)
     names(labels) <- Labels(data)
     list(labels = labels, values = values)
+}
+
+asFactors <- function(data)
+{
+    for (i in seq_len(ncol(data)))
+        if (!is.factor(data[[i]]))
+            data[[i]] <- Factor(data[[i]])
+    data
 }
